@@ -1,0 +1,17 @@
+elpa/
+evil/
+auto-save-list/
+eshell/
+themes/
+url/
+quoted-scratch/
+
+# temp files
+*.elc
+ac-comphist.dat
+sunshine.key
+
+# auto-gen and -save files
+\#*\#
+*~
+custom.el

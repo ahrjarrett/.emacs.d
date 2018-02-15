@@ -1,0 +1,55 @@
+#+TITLE: My Emacs Config
+#+AUTHOR: Andrew Jarrett
+#+EMAIL: ahrjarrett@gmail.com
+
+* Evil-Mode
+#+BEGIN_SRC emacs-lisp
+  (use-package evil
+     :ensure t
+     :init (setq evil-want-C-i-jump nil)
+     :config
+     (evil-mode 1))
+
+#+END_SRC
+
+* Which-Key
+#+BEGIN_SRC emacs-lisp
+  (use-package which-key
+    :ensure t
+    :config
+    (which-key-mode))
+#+END_SRC
+
+* Ivy
+#+BEGIN_SRC emacs-lisp
+  (use-package ivy
+    :ensure t
+    :config
+    (ivy-mode 1))
+#+END_SRC
+
+* Clojure
+  [[https://github.com/clojure-emacs/clojure-mode][Clojure-Mode on Github]]
+#+BEGIN_SRC emacs-lisp
+(use-package clojure-mode
+  :ensure t
+  :config)
+#+END_SRC
+
+* Paredit
+  #+BEGIN_SRC emacs-lisp
+    (use-package paredit
+      :ensure t
+      :init
+        (autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
+        (add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
+        (add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
+        (add-hook 'ielm-mode-hook             #'enable-paredit-mode)
+        (add-hook 'lisp-mode-hook             #'enable-paredit-mode)
+        (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
+        (add-hook 'scheme-mode-hook           #'enable-paredit-mode)
+
+        ;; turn on paredit for clojure:
+        (add-hook 'clojure-mode-hook #'paredit-mode))
+  #+END_SRC
+
