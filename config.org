@@ -12,6 +12,14 @@
 
 #+END_SRC
 
+* Personal Variables
+#+BEGIN_SRC emacs-lisp
+  (setq user-full-name "Andrew Jarrett"
+        user-email-address "ahrjarrett@gmail.com")
+  ;; where to put emacs backup files
+  (setq backup-directory-alist `(("." . "~/.saves")))
+#+END_SRC
+
 * Which-Key
 #+BEGIN_SRC emacs-lisp
   (use-package which-key
