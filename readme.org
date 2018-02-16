@@ -1,0 +1,9 @@
+#+TITLE: Emacs All the Things
+#+AUTHOR: Andrew Jarrett
+#+EMAIL: ahrjarrett@gmail.com
+
+This is my Emacs configuration. =init.el= basically installs =use-package= and generates a file based on the contents of [[https://github.com/ahrjarrett/.emacs.d/blob/master/config.org][config.org]], where the bulk of the configuration lies.
+
+Rewritten top-to-bottom on February 15, 2018 to support GUI Emacs.
+
+You're free to use whatever you'd like but do so at your own risk. I do not assume any liability whatsoever.
