@@ -211,14 +211,14 @@ TODO really dig into react, make sure you can use arrow fn in component attribut
 #+END_SRC
 
 * Prettier JS
-TODO Once you get web-mode working, uncomment the line that adds a hook for prettier.
+DONE Once you get web-mode working, uncomment the line that adds a hook for prettier.
 
 #+BEGIN_SRC emacs-lisp
 (use-package prettier-js
   :ensure t
   :init
   (add-hook 'js2-mode-hook 'prettier-js-mode)
-  ;;(add-hook 'web-mode-hook 'prettier-js-mode)
+  (add-hook 'web-mode-hook 'prettier-js-mode)
   (setq prettier-js-args
         '("--trailing-comma" "all"
           "--single-quote" "true")))
