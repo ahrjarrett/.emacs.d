@@ -9,7 +9,23 @@
      :init (setq evil-want-C-i-jump nil)
      :config
      (evil-mode 1))
+#+END_SRC
 
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'occur-mode-hook
+            (lambda ()
+              (evil-add-hjkl-bindings occur-mode-map 'emacs
+                (kbd "/")       'evil-search-forward
+                (kbd "n")       'evil-search-next
+                (kbd "N")       'evil-search-previous
+                (kbd "C-d")     'evil-scroll-down
+                (kbd "C-u")     'evil-scroll-up)))
+
+#+END_SRC
+
+* More Better Defaults
+#+BEGIN_SRC emacs-lisp
+  (setq gc-cons-threshold 20000000)
 #+END_SRC
 
 * Personal Variables
@@ -20,6 +36,31 @@
   (setq backup-directory-alist `(("." . "~/.saves")))
 #+END_SRC
 
+* Interface Customization
+  #+BEGIN_SRC emacs-lisp
+    ;; set font
+    (add-to-list 'default-frame-alist '(font . "mononoki 14"))
+    (set-face-attribute 'default t :font "mononoki 14")
+    (set-frame-font "mononoki 14" nil t)
+    (set-face-attribute 'default nil :height 140)
+
+    ;; get rid of Emacs GUI shit
+    (menu-bar-mode -1)
+    (scroll-bar-mode -1)
+    (tool-bar-mode -1)
+  #+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(use-package zenburn-theme
+  :ensure t
+  :init
+  (load-theme 'zenburn t))
+#+END_SRC
+
+* Custom Keybindings
+#+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "C-s") 'swiper)
+#+END_SRC
 * Which-Key
 #+BEGIN_SRC emacs-lisp
   (use-package which-key
@@ -34,6 +75,72 @@
     :ensure t
     :config
     (ivy-mode 1))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (use-package counsel
+    :ensure t
+    )
+#+END_SRC
+
+* Auto-Complete
+#+BEGIN_SRC emacs-lisp
+  (use-package auto-complete
+    :ensure t
+    :init
+    (progn
+      (ac-config-default)
+      (global-auto-complete-mode t)))
+#+END_SRC
+
+* Projectile
+[[https://github.com/bbatsov/projectile][Projectile on Github]]
+
+#+BEGIN_SRC emacs-lisp
+  (use-package projectile
+    :ensure t
+    :config
+    (projectile-global-mode)
+    ;; use ivy for pattern matching and completion
+    (setq projectile-completion-system 'ivy)) 
+#+END_SRC
+
+* Magit
+[[https://github.com/magit/magit][Magit on Github]]
+
+#+BEGIN_SRC emacs-lisp
+  (use-package magit
+    :ensure t
+    :bind (("C-c g" . magit-status)))
+#+END_SRC
+
+* Org-Mode
+  #+BEGIN_SRC emacs-lisp
+    (setq org-ellipsis "  ⋱ ")
+    (setq org-startup-indented t)
+
+    (use-package htmlize
+      :ensure t)
+
+    (use-package org-bullets
+      :ensure t
+      :init
+      (add-hook 'org-mode-hook #'org-bullets-mode))
+  #+END_SRC
+
+* Scratch
+The [[https://github.com/ahrjarrett/.emacs.d/blob/master/config.org]["quoted-scratch"]] package isn't on elpa/melpa, so you've gotta download and load it manually.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package quoted-scratch
+    :load-path "~/.emacs.d/quoted-scratch/"
+    :demand t
+    :config
+    (setq initial-scratch-message nil)
+    (add-hook 'emacs-startup-hook
+              (lambda ()
+                (run-with-timer 1 nil 'qs-refresh-scratch-buffer)
+                (qs-refresh-quote-when-idle))))
 #+END_SRC
 
 * Clojure
@@ -61,3 +168,77 @@
         (add-hook 'clojure-mode-hook #'paredit-mode))
   #+END_SRC
 
+* Macrostep
+
+#+BEGIN_SRC emacs-lisp
+  (use-package macrostep
+    :ensure t
+    :bind ("C-c e m" . macrostep-expand)
+          ("C-c e c" . macrostep-collapse))
+#+END_SRC
+
+* JS2 Mode
+[[https://elpa.gnu.org/packages/js2-mode.html][js2-mode on ELPA]]
+
+#+BEGIN_SRC emacs-lisp
+  (use-package js2-mode
+    :ensure t
+    :mode (("\\.js$" . js2-mode)) ;; makes sure we don't use for jsx files, too
+    :interpreter ("node" . js2-mode)
+    :config
+    (setq-default js2-strict-missing-semi-warning nil)
+    (add-hook 'js2-mode-hook (lambda () (setq js2-basic-offset 2))))
+#+END_SRC
+
+* Web Mode
+[[http://web-mode.org/][web-mode docs]]
+
+TODO really dig into react, make sure you can use arrow fn in component attribute.
+
+#+BEGIN_SRC 
+(use-package web-mode
+  :ensure t
+  :mode (("\\.html$\\'" . web-mode ))
+  :mode (("\\.css\\'" . web-mode ))
+  :init
+  (progn
+    (setq web-mode-markup-indent-offset 2)
+    (setq web-mode-code-indent-offset 2)
+    (setq web-mode-css-indent-offset 2)
+
+    (setq web-mode-enable-auto-pairing t)
+    (setq web-mode-enable-css-colorization t)))
+#+END_SRC
+
+* Prettier JS
+TODO Once you get web-mode working, uncomment the line that adds a hook for prettier.
+
+#+BEGIN_SRC emacs-lisp
+(use-package prettier-js
+  :ensure t
+  :init
+  (add-hook 'js2-mode-hook 'prettier-js-mode)
+  ;;(add-hook 'web-mode-hook 'prettier-js-mode)
+  (setq prettier-js-args
+        '("--trailing-comma" "all"
+          "--single-quote" "true")))
+#+END_SRC
+
+* Sunshine
+[[https://github.com/aaronbieber/sunshine.el][Sunshine.el on Github]]
+
+#+BEGIN_SRC emacs-lisp
+  (use-package sunshine
+    :ensure t
+    :commands sunshine-forecast
+    :config
+    (defun echo-file-contents (file-path)
+      "Return FILE-PATH's contents."
+      (with-temp-buffer
+        (insert-file-contents file-path)
+        (buffer-string)))
+    (setq sunshine-appid (echo-file-contents
+                          (expand-file-name "sunshine.key" user-emacs-directory)))
+    (setq sunshine-location "Denver, CO, USA")
+    (setq sunshine-show-icons t))
+#+END_SRC

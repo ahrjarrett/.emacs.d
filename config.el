@@ -5,6 +5,40 @@
    :config
    (evil-mode 1))
 
+(add-hook 'occur-mode-hook
+          (lambda ()
+            (evil-add-hjkl-bindings occur-mode-map 'emacs
+              (kbd "/")       'evil-search-forward
+              (kbd "n")       'evil-search-next
+              (kbd "N")       'evil-search-previous
+              (kbd "C-d")     'evil-scroll-down
+              (kbd "C-u")     'evil-scroll-up)))
+
+(setq gc-cons-threshold 20000000)
+
+(setq user-full-name "Andrew Jarrett"
+      user-email-address "ahrjarrett@gmail.com")
+;; where to put emacs backup files
+(setq backup-directory-alist `(("." . "~/.saves")))
+
+;; set font
+(add-to-list 'default-frame-alist '(font . "mononoki 14"))
+(set-face-attribute 'default t :font "mononoki 14")
+(set-frame-font "mononoki 14" nil t)
+(set-face-attribute 'default nil :height 140)
+
+;; get rid of Emacs GUI shit
+(menu-bar-mode -1)
+(scroll-bar-mode -1)
+(tool-bar-mode -1)
+
+(use-package zenburn-theme
+  :ensure t
+  :init
+  (load-theme 'zenburn t))
+
+(global-set-key (kbd "C-s") 'swiper)
+
 (use-package which-key
   :ensure t
   :config
@@ -14,6 +48,49 @@
   :ensure t
   :config
   (ivy-mode 1))
+
+(use-package counsel
+  :ensure t
+  )
+
+(use-package auto-complete
+  :ensure t
+  :init
+  (progn
+    (ac-config-default)
+    (global-auto-complete-mode t)))
+
+(use-package projectile
+  :ensure t
+  :config
+  (projectile-global-mode)
+  ;; use ivy for pattern matching and completion
+  (setq projectile-completion-system 'ivy))
+
+(use-package magit
+  :ensure t
+  :bind (("C-c g" . magit-status)))
+
+(setq org-ellipsis "  ⋱ ")
+(setq org-startup-indented t)
+
+(use-package htmlize
+  :ensure t)
+
+(use-package org-bullets
+  :ensure t
+  :init
+  (add-hook 'org-mode-hook #'org-bullets-mode))
+
+(use-package quoted-scratch
+  :load-path "~/.emacs.d/quoted-scratch/"
+  :demand t
+  :config
+  (setq initial-scratch-message nil)
+  (add-hook 'emacs-startup-hook
+            (lambda ()
+              (run-with-timer 1 nil 'qs-refresh-scratch-buffer)
+              (qs-refresh-quote-when-idle))))
 
 (use-package clojure-mode
   :ensure t
@@ -32,3 +109,39 @@
 
     ;; turn on paredit for clojure:
     (add-hook 'clojure-mode-hook #'paredit-mode))
+
+(use-package macrostep
+  :ensure t
+  :bind ("C-c e m" . macrostep-expand)
+        ("C-c e c" . macrostep-collapse))
+
+(use-package js2-mode
+  :ensure t
+  :mode (("\\.js$" . js2-mode)) ;; makes sure we don't use for jsx files, too
+  :interpreter ("node" . js2-mode)
+  :config
+  (setq-default js2-strict-missing-semi-warning nil)
+  (add-hook 'js2-mode-hook (lambda () (setq js2-basic-offset 2))))
+
+(use-package prettier-js
+  :ensure t
+  :init
+  (add-hook 'js2-mode-hook 'prettier-js-mode)
+  ;;(add-hook 'web-mode-hook 'prettier-js-mode)
+  (setq prettier-js-args
+        '("--trailing-comma" "all"
+          "--single-quote" "true")))
+
+(use-package sunshine
+  :ensure t
+  :commands sunshine-forecast
+  :config
+  (defun echo-file-contents (file-path)
+    "Return FILE-PATH's contents."
+    (with-temp-buffer
+      (insert-file-contents file-path)
+      (buffer-string)))
+  (setq sunshine-appid (echo-file-contents
+                        (expand-file-name "sunshine.key" user-emacs-directory)))
+  (setq sunshine-location "Denver, CO, USA")
+  (setq sunshine-show-icons t))
