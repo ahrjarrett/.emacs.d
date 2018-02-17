@@ -51,6 +51,9 @@
   #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
+;;(use-package color-theme
+;;  :ensure t)
+
 (use-package zenburn-theme
   :ensure t
   :init
@@ -102,7 +105,7 @@
     :config
     (projectile-global-mode)
     ;; use ivy for pattern matching and completion
-    (setq projectile-completion-system 'ivy)) 
+    (setq projectile-completion-system 'ivy))
 #+END_SRC
 
 * Magit
@@ -195,11 +198,11 @@ The [[https://github.com/ahrjarrett/.emacs.d/blob/master/config.org]["quoted-scr
 
 TODO really dig into react, make sure you can use arrow fn in component attribute.
 
-#+BEGIN_SRC 
+#+BEGIN_SRC emacs-lisp
 (use-package web-mode
   :ensure t
   :mode (("\\.html$\\'" . web-mode ))
-  :mode (("\\.css\\'" . web-mode ))
+  :mode (("\\.css$\\'" . web-mode ))
   :init
   (progn
     (setq web-mode-markup-indent-offset 2)

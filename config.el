@@ -32,6 +32,9 @@
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 
+;;(use-package color-theme
+;;  :ensure t)
+
 (use-package zenburn-theme
   :ensure t
   :init
@@ -123,11 +126,24 @@
   (setq-default js2-strict-missing-semi-warning nil)
   (add-hook 'js2-mode-hook (lambda () (setq js2-basic-offset 2))))
 
+(use-package web-mode
+  :ensure t
+  :mode (("\\.html$\\'" . web-mode ))
+  :mode (("\\.css$\\'" . web-mode ))
+  :init
+  (progn
+    (setq web-mode-markup-indent-offset 2)
+    (setq web-mode-code-indent-offset 2)
+    (setq web-mode-css-indent-offset 2)
+
+    (setq web-mode-enable-auto-pairing t)
+    (setq web-mode-enable-css-colorization t)))
+
 (use-package prettier-js
   :ensure t
   :init
   (add-hook 'js2-mode-hook 'prettier-js-mode)
-  ;;(add-hook 'web-mode-hook 'prettier-js-mode)
+  (add-hook 'web-mode-hook 'prettier-js-mode)
   (setq prettier-js-args
         '("--trailing-comma" "all"
           "--single-quote" "true")))
