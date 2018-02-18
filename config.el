@@ -95,6 +95,9 @@
                 (run-with-timer 1 nil 'qs-refresh-scratch-buffer)
                 (qs-refresh-quote-when-idle)))))
 
+;; display “lambda” as “λ”
+(global-prettify-symbols-mode 1)
+
 (use-package clojure-mode
   :ensure t
   :config)

@@ -3,6 +3,7 @@
 #+EMAIL: ahrjarrett@gmail.com
 
 * Evil-Mode
+[[https://github.com/emacs-evil/evil][Evil-mode on Github]]
 #+BEGIN_SRC emacs-lisp
   (use-package evil
      :ensure t
@@ -11,6 +12,7 @@
      (evil-mode 1))
 #+END_SRC
 
+This occur-mode hook allows me to hit =C-z= in a Magit buffer to turn on/off Evil bindings:
 #+BEGIN_SRC emacs-lisp
   (add-hook 'occur-mode-hook
             (lambda ()
@@ -20,10 +22,10 @@
                 (kbd "N")       'evil-search-previous
                 (kbd "C-d")     'evil-scroll-down
                 (kbd "C-u")     'evil-scroll-up)))
-
 #+END_SRC
 
 * More Better Defaults
+Garbage collect at 20MG instead of 0.76MB to speed up some operations:
 #+BEGIN_SRC emacs-lisp
   (setq gc-cons-threshold 20000000)
 #+END_SRC
@@ -37,18 +39,18 @@
 #+END_SRC
 
 * Interface Customization
-  #+BEGIN_SRC emacs-lisp
-    ;; set font
-    (add-to-list 'default-frame-alist '(font . "mononoki 14"))
-    (set-face-attribute 'default t :font "mononoki 14")
-    (set-frame-font "mononoki 14" nil t)
-    (set-face-attribute 'default nil :height 140)
+#+BEGIN_SRC emacs-lisp
+  ;; set font
+  (add-to-list 'default-frame-alist '(font . "mononoki 14"))
+  (set-face-attribute 'default t :font "mononoki 14")
+  (set-frame-font "mononoki 14" nil t)
+  (set-face-attribute 'default nil :height 140)
 
-    ;; get rid of Emacs GUI shit
-    (menu-bar-mode -1)
-    (scroll-bar-mode -1)
-    (tool-bar-mode -1)
-  #+END_SRC
+  ;; get rid of Emacs GUI shit
+  (menu-bar-mode -1)
+  (scroll-bar-mode -1)
+  (tool-bar-mode -1)
+#+END_SRC
 
 #+BEGIN_SRC emacs-lisp
 ;;(use-package color-theme
@@ -115,22 +117,21 @@
 #+END_SRC
 
 * Org-Mode
-  #+BEGIN_SRC emacs-lisp
-    (setq org-ellipsis "  ⋱ ")
-    (setq org-startup-indented t)
+#+BEGIN_SRC emacs-lisp
+  (setq org-ellipsis "  ⋱ ")
+  (setq org-startup-indented t)
 
-    (use-package htmlize
-      :ensure t)
+  (use-package htmlize
+    :ensure t)
 
-    (use-package org-bullets
-      :ensure t
-      :init
-      (add-hook 'org-mode-hook #'org-bullets-mode))
-  #+END_SRC
+  (use-package org-bullets
+    :ensure t
+    :init
+    (add-hook 'org-mode-hook #'org-bullets-mode))
+#+END_SRC
 
 * Scratch
 The [[https://github.com/ahrjarrett/.emacs.d/blob/master/config.org]["quoted-scratch"]] package isn't on elpa/melpa, so you've gotta download and load it manually.
-
 #+BEGIN_SRC emacs-lisp
     (use-package quoted-scratch
       :load-path "~/.emacs.d/quoted-scratch/"
@@ -144,8 +145,14 @@ The [[https://github.com/ahrjarrett/.emacs.d/blob/master/config.org]["quoted-scr
                     (qs-refresh-quote-when-idle)))))
 #+END_SRC
 
+* Emacs Lisp
+#+BEGIN_SRC emacs-lisp
+  ;; display “lambda” as “λ”
+  (global-prettify-symbols-mode 1)
+#+END_SRC
+
 * Clojure
-  [[https://github.com/clojure-emacs/clojure-mode][Clojure-Mode on Github]]
+[[https://github.com/clojure-emacs/clojure-mode][Clojure-Mode on Github]]
 #+BEGIN_SRC emacs-lisp
 (use-package clojure-mode
   :ensure t
@@ -153,24 +160,24 @@ The [[https://github.com/ahrjarrett/.emacs.d/blob/master/config.org]["quoted-scr
 #+END_SRC
 
 * Paredit
-  #+BEGIN_SRC emacs-lisp
-    (use-package paredit
-      :ensure t
-      :init
-        (autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
-        (add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
-        (add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
-        (add-hook 'ielm-mode-hook             #'enable-paredit-mode)
-        (add-hook 'lisp-mode-hook             #'enable-paredit-mode)
-        (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
-        (add-hook 'scheme-mode-hook           #'enable-paredit-mode)
+#+BEGIN_SRC emacs-lisp
+  (use-package paredit
+    :ensure t
+    :init
+      (autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
+      (add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
+      (add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
+      (add-hook 'ielm-mode-hook             #'enable-paredit-mode)
+      (add-hook 'lisp-mode-hook             #'enable-paredit-mode)
+      (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
+      (add-hook 'scheme-mode-hook           #'enable-paredit-mode)
 
-        ;; turn on paredit for clojure:
-        (add-hook 'clojure-mode-hook #'paredit-mode))
-  #+END_SRC
+      ;; turn on paredit for clojure:
+      (add-hook 'clojure-mode-hook #'paredit-mode))
+#+END_SRC
 
 * Macrostep
-
+[[https://github.com/joddie/macrostep][Macrostep on Github]]
 #+BEGIN_SRC emacs-lisp
   (use-package macrostep
     :ensure t
@@ -180,7 +187,6 @@ The [[https://github.com/ahrjarrett/.emacs.d/blob/master/config.org]["quoted-scr
 
 * JS2 Mode
 [[https://elpa.gnu.org/packages/js2-mode.html][js2-mode on ELPA]]
-
 #+BEGIN_SRC emacs-lisp
   (use-package js2-mode
     :ensure t
@@ -227,7 +233,6 @@ DONE Once you get web-mode working, uncomment the line that adds a hook for pret
 
 * Sunshine
 [[https://github.com/aaronbieber/sunshine.el][Sunshine.el on Github]]
-
 #+BEGIN_SRC emacs-lisp
   (use-package sunshine
     :ensure t
