@@ -53,8 +53,7 @@
   (ivy-mode 1))
 
 (use-package counsel
-  :ensure t
-  )
+  :ensure t)
 
 (use-package auto-complete
   :ensure t
@@ -89,11 +88,12 @@
   :load-path "~/.emacs.d/quoted-scratch/"
   :demand t
   :config
-  (setq initial-scratch-message nil)
-  (add-hook 'emacs-startup-hook
-            (lambda ()
-              (run-with-timer 1 nil 'qs-refresh-scratch-buffer)
-              (qs-refresh-quote-when-idle))))
+  (progn
+    (setq initial-scratch-message nil)
+    (add-hook 'emacs-startup-hook
+              (lambda ()
+                (run-with-timer 1 nil 'qs-refresh-scratch-buffer)
+                (qs-refresh-quote-when-idle)))))
 
 (use-package clojure-mode
   :ensure t

@@ -64,6 +64,7 @@
 #+BEGIN_SRC emacs-lisp
   (global-set-key (kbd "C-s") 'swiper)
 #+END_SRC
+
 * Which-Key
 #+BEGIN_SRC emacs-lisp
   (use-package which-key
@@ -73,17 +74,15 @@
 #+END_SRC
 
 * Ivy
+[[https://github.com/abo-abo/swiper][Repository for Ivy, Swiper & Counsel]]
 #+BEGIN_SRC emacs-lisp
   (use-package ivy
     :ensure t
     :config
     (ivy-mode 1))
-#+END_SRC
 
-#+BEGIN_SRC emacs-lisp
   (use-package counsel
-    :ensure t
-    )
+    :ensure t)
 #+END_SRC
 
 * Auto-Complete
@@ -98,7 +97,6 @@
 
 * Projectile
 [[https://github.com/bbatsov/projectile][Projectile on Github]]
-
 #+BEGIN_SRC emacs-lisp
   (use-package projectile
     :ensure t
@@ -110,7 +108,6 @@
 
 * Magit
 [[https://github.com/magit/magit][Magit on Github]]
-
 #+BEGIN_SRC emacs-lisp
   (use-package magit
     :ensure t
@@ -135,15 +132,16 @@
 The [[https://github.com/ahrjarrett/.emacs.d/blob/master/config.org]["quoted-scratch"]] package isn't on elpa/melpa, so you've gotta download and load it manually.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package quoted-scratch
-    :load-path "~/.emacs.d/quoted-scratch/"
-    :demand t
-    :config
-    (setq initial-scratch-message nil)
-    (add-hook 'emacs-startup-hook
-              (lambda ()
-                (run-with-timer 1 nil 'qs-refresh-scratch-buffer)
-                (qs-refresh-quote-when-idle))))
+    (use-package quoted-scratch
+      :load-path "~/.emacs.d/quoted-scratch/"
+      :demand t
+      :config
+      (progn
+        (setq initial-scratch-message nil)
+        (add-hook 'emacs-startup-hook
+                  (lambda ()
+                    (run-with-timer 1 nil 'qs-refresh-scratch-buffer)
+                    (qs-refresh-quote-when-idle)))))
 #+END_SRC
 
 * Clojure
