@@ -73,6 +73,11 @@
   :ensure t
   :bind (("C-c g" . magit-status)))
 
+(use-package git-gutter
+  :ensure t
+  :init
+  (global-git-gutter-mode +1))
+
 (setq org-ellipsis "  ⋱ ")
 (setq org-startup-indented t)
 
