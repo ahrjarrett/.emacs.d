@@ -227,6 +227,17 @@ TODO really dig into react, make sure you can use arrow fn in component attribut
     (setq web-mode-enable-css-colorization t)))
 #+END_SRC
 
+* LESS
+#+BEGIN_SRC emacs-lisp
+  (use-package less-css-mode
+    :ensure t
+    ;:commands less-css-mode
+    ;:config
+    ;(use-package js2-mode)
+    ;(use-package skewer-less)
+    )
+
+#+END_SRC
 * Prettier JS
 DONE Once you get web-mode working, uncomment the line that adds a hook for prettier.
 

@@ -147,6 +147,14 @@
     (setq web-mode-enable-auto-pairing t)
     (setq web-mode-enable-css-colorization t)))
 
+(use-package less-css-mode
+  :ensure t
+  ;:commands less-css-mode
+  ;:config
+  ;(use-package js2-mode)
+  ;(use-package skewer-less)
+  )
+
 (use-package prettier-js
   :ensure t
   :init
