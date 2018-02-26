@@ -2,8 +2,7 @@
 #+AUTHOR: Andrew Jarrett
 #+EMAIL: ahrjarrett@gmail.com
 
-* Evil-Mode
-[[https://github.com/emacs-evil/evil][Evil-mode on Github]]
+* Evil-Mode[[https://github.com/emacs-evil/evil][Evil-mode on Github]]
 #+BEGIN_SRC emacs-lisp
   (use-package evil
      :ensure t
@@ -84,6 +83,12 @@ Garbage collect at 20MG instead of 0.76MB to speed up some operations:
     (ivy-mode 1))
 
   (use-package counsel
+    :ensure t)
+#+END_SRC
+
+* Try
+#+BEGIN_SRC emacs-lisp
+  (use-package try
     :ensure t)
 #+END_SRC
 
