@@ -2,7 +2,8 @@
 #+AUTHOR: Andrew Jarrett
 #+EMAIL: ahrjarrett@gmail.com
 
-* Evil-Mode[[https://github.com/emacs-evil/evil][Evil-mode on Github]]
+* Evil-Mode
+[[https://github.com/emacs-evil/evil][Evil-mode on Github]]
 #+BEGIN_SRC emacs-lisp
   (use-package evil
      :ensure t
