@@ -142,7 +142,7 @@ Garbage collect at 20MG instead of 0.76MB to speed up some operations:
 
   (use-package org-bullets
     :ensure t
-    :init
+    :config
     (add-hook 'org-mode-hook #'org-bullets-mode))
 #+END_SRC
 
@@ -175,21 +175,49 @@ The [[https://github.com/ahrjarrett/.emacs.d/blob/master/config.org]["quoted-scr
   :config)
 #+END_SRC
 
-* Paredit
-#+BEGIN_SRC emacs-lisp
-  (use-package paredit
-    :ensure t
-    :init
-      (autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
-      (add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
-      (add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
-      (add-hook 'ielm-mode-hook             #'enable-paredit-mode)
-      (add-hook 'lisp-mode-hook             #'enable-paredit-mode)
-      (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
-      (add-hook 'scheme-mode-hook           #'enable-paredit-mode)
+* Parinfer
+[[https://github.com/DogLooksGood/parinfer-mode][parinfer-mode on Github]]
 
-      ;; turn on paredit for clojure:
-      (add-hook 'clojure-mode-hook #'paredit-mode))
+Right now these are just the default settings, minus disabling lispy and paredit support.
+#+BEGIN_SRC emacs-lisp
+  (use-package parinfer
+    :ensure t
+    :bind
+    (("C-," . parinfer-toggle-mode))
+    :init
+    (progn
+      (setq parinfer-extensions
+            '(defaults       ; should be included.
+              pretty-parens  ; different paren styles for different modes.
+              evil           ; If you use Evil.
+              ;; lispy          ; If you use Lispy. With this extension, you should install Lispy and do not enable lispy-mode directly.
+              ;; paredit        ; Introduce some paredit commands.
+              smart-tab      ; C-b & C-f jump positions and smart shift with tab & S-tab.
+              smart-yank))   ; Yank behavior depend on mode.
+      (add-hook 'clojure-mode-hook #'parinfer-mode)
+      (add-hook 'emacs-lisp-mode-hook #'parinfer-mode)
+      (add-hook 'common-lisp-mode-hook #'parinfer-mode)
+      (add-hook 'scheme-mode-hook #'parinfer-mode)
+      (add-hook 'lisp-mode-hook #'parinfer-mode)))
+#+END_SRC
+
+* Paredit [disabled]
+Currently disabled as I'm trying [[https://github.com/shaunlebron/parinfer][parinfer]]
+
+#+BEGIN_SRC emacs-lisp
+  ;;(use-package paredit
+  ;;  :ensure t
+  ;;  :init
+  ;;    (autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
+  ;;    (add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
+  ;;    (add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
+  ;;    (add-hook 'ielm-mode-hook             #'enable-paredit-mode)
+  ;;    (add-hook 'lisp-mode-hook             #'enable-paredit-mode)
+  ;;    (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
+  ;;    (add-hook 'scheme-mode-hook           #'enable-paredit-mode)
+
+  ;;    ;; turn on paredit for clojure:
+  ;;    (add-hook 'clojure-mode-hook #'paredit-mode))
 #+END_SRC
 
 * Macrostep
