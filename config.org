@@ -87,6 +87,12 @@ Garbage collect at 20MG instead of 0.76MB to speed up some operations:
     :ensure t)
 #+END_SRC
 
+* Dired
+#+BEGIN_SRC emacs-lisp
+  ;; allow me to open a file/dir in dired w/o creating another buffer by hitting `a`
+  (put 'dired-find-alternate-file 'disabled nil)
+#+END_SRC
+
 * Try
 #+BEGIN_SRC emacs-lisp
   (use-package try
@@ -247,19 +253,22 @@ Currently disabled as I'm trying [[https://github.com/shaunlebron/parinfer][pari
 TODO really dig into react, make sure you can use arrow fn in component attribute.
 
 #+BEGIN_SRC emacs-lisp
-(use-package web-mode
-  :ensure t
-  :mode (("\\.html$\\'" . web-mode ))
-  :mode (("\\.css$\\'" . web-mode ))
-  :init
-  (progn
-    (setq web-mode-markup-indent-offset 2)
-    (setq web-mode-code-indent-offset 2)
-    (setq web-mode-css-indent-offset 2)
+  (use-package web-mode
+    :ensure t
+    :mode (("\\.html\\'" . web-mode ))
+    :mode (("\\.css\\'" . web-mode ))
+    :init
+    (progn
+      (setq web-mode-markup-indent-offset 2)
+      (setq web-mode-code-indent-offset 2)
+      (setq web-mode-css-indent-offset 2)
 
-    (setq web-mode-enable-auto-pairing t)
-    (setq web-mode-enable-css-colorization t)))
+      (setq web-mode-enable-auto-pairing t)
+      (setq web-mode-enable-css-colorization t)))
+
 #+END_SRC
+
+#+RESULTS:
 
 * LESS
 #+BEGIN_SRC emacs-lisp
