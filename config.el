@@ -55,6 +55,9 @@
 (use-package counsel
   :ensure t)
 
+;; allow me to open a file/dir in dired w/o creating another buffer by hitting `a`
+(put 'dired-find-alternate-file 'disabled nil)
+
 (use-package try
   :ensure t)
 
@@ -91,6 +94,8 @@
   :ensure t
   :config
   (add-hook 'org-mode-hook #'org-bullets-mode))
+
+(setq org-directory "~/Dropbox/orgfiles")
 
 (use-package quoted-scratch
   :load-path "~/.emacs.d/quoted-scratch/"
