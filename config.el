@@ -115,6 +115,9 @@
   :ensure t
   :config)
 
+(use-package cider
+  :ensure t)
+
 (use-package parinfer
   :ensure t
   :bind

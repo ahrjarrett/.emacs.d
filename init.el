@@ -24,5 +24,9 @@
 ;; load custom file & don't throw an error if empty
 (load custom-file 'noerror)
 
+;; set PATH and EXEC-PATH stuff
+(setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
+(setq exec-path (append exec-path '("/usr/local/bin")))
+
 ;; use literate .org file for the rest of my config
 (org-babel-load-file (expand-file-name "~/.emacs.d/config.org"))
