@@ -139,6 +139,7 @@ Garbage collect at 20MG instead of 0.76MB to speed up some operations:
 #+END_SRC
 
 * Org-Mode
+** Basic Org Config
 #+BEGIN_SRC emacs-lisp
   (setq org-ellipsis "  ⋱ ")
   (setq org-startup-indented t)
@@ -152,9 +153,30 @@ Garbage collect at 20MG instead of 0.76MB to speed up some operations:
     (add-hook 'org-mode-hook #'org-bullets-mode))
 #+END_SRC
 
+** Org Autocomplete
+#+BEGIN_SRC emacs-lisp
+  (use-package org-ac
+    :ensure t
+    ;; why is this require in init necessary? is it?
+    :init (progn
+           (require 'org-ac)
+           (org-ac/config-default)))
+
+  (global-set-key (kbd "C-c c") 'org-capture)
+
+  (setq org-agenda-files (list (concat org-directory "/google-calendar.org")
+                               (concat org-directory "/index.org")))
+                                  
+#+END_SRC
+
 ** Org Capture
 #+BEGIN_SRC emacs-lisp
-  (setq org-directory "~/Dropbox/orgfiles")
+  (custom-set-variables
+   '(org-directory "~/Dropbox/orgfiles")
+   '(org-default-notes-file (concat org-directory "/notes.org")))
+
+  ;; TODO rip this out and put it in a use-package :init
+  (global-set-key "\C-ca" 'org-agenda)
 #+END_SRC
 
 * Scratch

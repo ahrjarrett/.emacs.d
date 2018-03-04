@@ -95,7 +95,24 @@
   :config
   (add-hook 'org-mode-hook #'org-bullets-mode))
 
-(setq org-directory "~/Dropbox/orgfiles")
+(custom-set-variables
+ '(org-directory "~/Dropbox/orgfiles")
+ '(org-default-notes-file (concat org-directory "/notes.org")))
+
+;; TODO rip this out and put it in a use-package :init
+(global-set-key "\C-ca" 'org-agenda)
+
+(use-package org-ac
+  :ensure t
+  ;; why is this require in init necessary? is it?
+  :init (progn
+         (require 'org-ac)
+         (org-ac/config-default)))
+
+(global-set-key (kbd "C-c c") 'org-capture)
+
+(setq org-agenda-files (list (concat org-directory "/google-calendar.org")
+                             (concat org-directory "/index.org")))
 
 (use-package quoted-scratch
   :load-path "~/.emacs.d/quoted-scratch/"
