@@ -17,3 +17,7 @@ sunshine.key
 custom.el
 /projectile-bookmarks.eld
 projectile.cache
+
+### org-mode auto-gen stuff
+bookmarks
+

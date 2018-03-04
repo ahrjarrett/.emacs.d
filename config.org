@@ -68,6 +68,8 @@ Garbage collect at 20MG instead of 0.76MB to speed up some operations:
 * Custom Keybindings
 #+BEGIN_SRC emacs-lisp
   (global-set-key (kbd "C-s") 'swiper)
+  (global-set-key (kbd "C-c c") 'org-capture)
+  (global-set-key (kbd "C-c a") 'org-agenda)
 #+END_SRC
 
 * Which-Key
@@ -159,6 +161,9 @@ Garbage collect at 20MG instead of 0.76MB to speed up some operations:
   (custom-set-variables
    '(org-directory "~/Dropbox/orgfiles")
    '(org-default-notes-file (concat org-directory "/notes.org")))
+
+  (setq org-agenda-files (list (concat org-directory "/google-calendar.org")
+                               (concat org-directory "/index.org")))
 #+END_SRC
 
 ** Org Autocomplete
@@ -169,21 +174,12 @@ Garbage collect at 20MG instead of 0.76MB to speed up some operations:
     :init (progn
            (require 'org-ac)
            (org-ac/config-default)))
-
-  (global-set-key (kbd "C-c c") 'org-capture)
-
-  (setq org-agenda-files (list (concat org-directory "/google-calendar.org")
-                               (concat org-directory "/index.org")))
-                                  
 #+END_SRC
 
 ** Org Capture
 #+BEGIN_SRC emacs-lisp
   ;; Go into Insert state after org-capture 
   (add-hook 'org-capture-mode-hook 'evil-insert-state)
-
-  ;; TODO rip this out and put it in a use-package :init
-  (global-set-key "\C-ca" 'org-agenda)
 
   ;; NOTE: %i allows you to mark a block of text anywhere in Emacs,
   ;; run Org-Capture, and it will drop that text into the capture.
@@ -193,11 +189,19 @@ Garbage collect at 20MG instead of 0.76MB to speed up some operations:
           ("n" "Note" entry (file+headline (concat org-directory "/notes.org") "Notes")
                "* Note %?\n%i\n%T")
           ("b" "Bookmark" entry (file+headline (concat org-directory "/index.org") "Bookmarks")
-               "* %? %^L %^g \n%T" :prepend t)
+               "* %^L %^g \n%T" :prepend t)
           ("t" "Todo Item" entry (file+headline (concat org-directory "/todo.org") "Todo Items")
                "* TODO %?\n%T" :prepend t)
           ("j" "Journal" entry (file+datetree (concat org-directory "/journal.org"))
                "* %?\nEntered on %U\n  %i\n  %a")))
+
+#+END_SRC
+
+** Org-Gcal
+[[https://github.com/myuhe/org-gcal.el][org-gcal on GitHub]]
+[[https://console.developers.google.com][Google Developers Console]]
+
+#+BEGIN_SRC emacs-lisp
 
 #+END_SRC
 

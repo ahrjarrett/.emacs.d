@@ -41,6 +41,8 @@
   (load-theme 'zenburn t))
 
 (global-set-key (kbd "C-s") 'swiper)
+(global-set-key (kbd "C-c c") 'org-capture)
+(global-set-key (kbd "C-c a") 'org-agenda)
 
 (use-package which-key
   :ensure t
@@ -100,6 +102,9 @@
  '(org-directory "~/Dropbox/orgfiles")
  '(org-default-notes-file (concat org-directory "/notes.org")))
 
+(setq org-agenda-files (list (concat org-directory "/google-calendar.org")
+                             (concat org-directory "/index.org")))
+
 (use-package org-ac
   :ensure t
   ;; why is this require in init necessary? is it?
@@ -107,28 +112,24 @@
          (require 'org-ac)
          (org-ac/config-default)))
 
-(global-set-key (kbd "C-c c") 'org-capture)
-
-(setq org-agenda-files (list (concat org-directory "/google-calendar.org")
-                             (concat org-directory "/index.org")))
-
 ;; Go into Insert state after org-capture 
 (add-hook 'org-capture-mode-hook 'evil-insert-state)
 
-;; TODO rip this out and put it in a use-package :init
-(global-set-key "\C-ca" 'org-agenda)
-
+;; NOTE: %i allows you to mark a block of text anywhere in Emacs,
+;; run Org-Capture, and it will drop that text into the capture.
 (setq org-capture-templates
       '(("a" "Appointment" entry (file+headline (concat org-directory "/google-calendar.org") "Appointments")
              "* TODO %?\n:PROPERTIES:\n\n:END:\nDEADLINE: %^T \n %i\n")
-        ("n" "Node" entry (file+headline (concat org-directory "/notes.org") Notes)
-             "* Note %?\n%T")
-        ("b" "Bookmark" entry (file+headline (concat org-directory "/bookmarks.org") "Bookmarks")
-             "* %? %^L %^g \n%T" :prepend t)
+        ("n" "Note" entry (file+headline (concat org-directory "/notes.org") "Notes")
+             "* Note %?\n%i\n%T")
+        ("b" "Bookmark" entry (file+headline (concat org-directory "/index.org") "Bookmarks")
+             "* %^L %^g \n%T" :prepend t)
         ("t" "Todo Item" entry (file+headline (concat org-directory "/todo.org") "Todo Items")
              "* TODO %?\n%T" :prepend t)
         ("j" "Journal" entry (file+datetree (concat org-directory "/journal.org"))
-             "* %?\nEntered on %U\n %i\n %a")))
+             "* %?\nEntered on %U\n  %i\n  %a")))
+
+
 
 (use-package quoted-scratch
   :load-path "~/.emacs.d/quoted-scratch/"
