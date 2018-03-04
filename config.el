@@ -95,12 +95,10 @@
   :config
   (add-hook 'org-mode-hook #'org-bullets-mode))
 
+;; Custom variables
 (custom-set-variables
  '(org-directory "~/Dropbox/orgfiles")
  '(org-default-notes-file (concat org-directory "/notes.org")))
-
-;; TODO rip this out and put it in a use-package :init
-(global-set-key "\C-ca" 'org-agenda)
 
 (use-package org-ac
   :ensure t
@@ -113,6 +111,24 @@
 
 (setq org-agenda-files (list (concat org-directory "/google-calendar.org")
                              (concat org-directory "/index.org")))
+
+;; Go into Insert state after org-capture 
+(add-hook 'org-capture-mode-hook 'evil-insert-state)
+
+;; TODO rip this out and put it in a use-package :init
+(global-set-key "\C-ca" 'org-agenda)
+
+(setq org-capture-templates
+      '(("a" "Appointment" entry (file+headline (concat org-directory "/google-calendar.org") "Appointments")
+             "* TODO %?\n:PROPERTIES:\n\n:END:\nDEADLINE: %^T \n %i\n")
+        ("n" "Node" entry (file+headline (concat org-directory "/notes.org") Notes)
+             "* Note %?\n%T")
+        ("b" "Bookmark" entry (file+headline (concat org-directory "/bookmarks.org") "Bookmarks")
+             "* %? %^L %^g \n%T" :prepend t)
+        ("t" "Todo Item" entry (file+headline (concat org-directory "/todo.org") "Todo Items")
+             "* TODO %?\n%T" :prepend t)
+        ("j" "Journal" entry (file+datetree (concat org-directory "/journal.org"))
+             "* %?\nEntered on %U\n %i\n %a")))
 
 (use-package quoted-scratch
   :load-path "~/.emacs.d/quoted-scratch/"

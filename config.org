@@ -185,17 +185,19 @@ Garbage collect at 20MG instead of 0.76MB to speed up some operations:
   ;; TODO rip this out and put it in a use-package :init
   (global-set-key "\C-ca" 'org-agenda)
 
+  ;; NOTE: %i allows you to mark a block of text anywhere in Emacs,
+  ;; run Org-Capture, and it will drop that text into the capture.
   (setq org-capture-templates
         '(("a" "Appointment" entry (file+headline (concat org-directory "/google-calendar.org") "Appointments")
                "* TODO %?\n:PROPERTIES:\n\n:END:\nDEADLINE: %^T \n %i\n")
-          ("n" "Node" entry (file+headline (concat org-directory "/notes.org") Notes)
-               "* Note %?\n%T")
-          ("b" "Bookmark" entry (file+headline (concat org-directory "/bookmarks.org") "Bookmarks")
+          ("n" "Note" entry (file+headline (concat org-directory "/notes.org") "Notes")
+               "* Note %?\n%i\n%T")
+          ("b" "Bookmark" entry (file+headline (concat org-directory "/index.org") "Bookmarks")
                "* %? %^L %^g \n%T" :prepend t)
           ("t" "Todo Item" entry (file+headline (concat org-directory "/todo.org") "Todo Items")
                "* TODO %?\n%T" :prepend t)
           ("j" "Journal" entry (file+datetree (concat org-directory "/journal.org"))
-               "* %?\nEntered on %U\n %i\n %a")))
+               "* %?\nEntered on %U\n  %i\n  %a")))
 
 #+END_SRC
 
