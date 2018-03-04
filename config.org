@@ -2,9 +2,6 @@
 #+AUTHOR: Andrew Jarrett
 #+EMAIL: ahrjarrett@gmail.com
 
-* Todo
-- Put custom keybindings in Org-Mode into Custom Keybindings section
-
 * Evil-Mode
 [[https://github.com/emacs-evil/evil][Evil-mode on Github]]
 #+BEGIN_SRC emacs-lisp
@@ -56,13 +53,13 @@ Garbage collect at 20MG instead of 0.76MB to speed up some operations:
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-;;(use-package color-theme
-;;  :ensure t)
+  ;;(use-package color-theme
+  ;;  :ensure t)
 
-(use-package zenburn-theme
-  :ensure t
-  :init
-  (load-theme 'zenburn t))
+  (use-package zenburn-theme
+    :ensure t
+    :init
+    (load-theme 'zenburn t))
 #+END_SRC
 
 * Custom Keybindings
@@ -184,26 +181,19 @@ Garbage collect at 20MG instead of 0.76MB to speed up some operations:
   ;; NOTE: %i allows you to mark a block of text anywhere in Emacs,
   ;; run Org-Capture, and it will drop that text into the capture.
   (setq org-capture-templates
-        '(("a" "Appointment" entry (file+headline (concat org-directory "/google-calendar.org") "Appointments")
+        '(("a" "Appointment" entry (file+headline  (concat org-directory "/google-calendar.org") "Appointments")
                "* TODO %?\n:PROPERTIES:\n\n:END:\nDEADLINE: %^T \n %i\n")
-          ("n" "Note" entry (file+headline (concat org-directory "/notes.org") "Notes")
-               "* Note %?\n%i\n%T")
-          ("b" "Bookmark" entry (file+headline (concat org-directory "/index.org") "Bookmarks")
+          ("b" "Bookmark" entry (file+headline     (concat org-directory "/index.org") "Bookmarks")
                "* %^L %^g \n%T" :prepend t)
-          ("t" "Todo Item" entry (file+headline (concat org-directory "/todo.org") "Todo Items")
-               "* TODO %?\n%T" :prepend t)
-          ("j" "Journal" entry (file+datetree (concat org-directory "/journal.org"))
-               "* %?\nEntered on %U\n  %i\n  %a")))
+          ("j" "Journal" entry (file+datetree      (concat org-directory "/journal.org"))
+               "* %?\nEntered on %U\n  %i\n  %a")
+          ("n" "Note:" entry (file+headline         (concat org-directory "/notes.org") "Notes")
+               "* Note %? %^g \n%i\n%T")
+          ("t" "Todo Item" entry (file+headline    (concat org-directory "/todo.org") "Todo Items")
+               "* TODO %?\n%T" :prepend t)))
 
 #+END_SRC
 
-** Org-Gcal
-[[https://github.com/myuhe/org-gcal.el][org-gcal on GitHub]]
-[[https://console.developers.google.com][Google Developers Console]]
-
-#+BEGIN_SRC emacs-lisp
-
-#+END_SRC
 
 * Scratch
 The [[https://github.com/ahrjarrett/.emacs.d/blob/master/config.org]["quoted-scratch"]] package isn't on elpa/melpa, so you've gotta download and load it manually.
@@ -371,3 +361,5 @@ DONE Once you get web-mode working, uncomment the line that adds a hook for pret
     (setq sunshine-location "Denver, CO, USA")
     (setq sunshine-show-icons t))
 #+END_SRC
+* Todo
+- DONE Put custom keybindings in Org-Mode into Custom Keybindings section

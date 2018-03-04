@@ -129,8 +129,6 @@
         ("j" "Journal" entry (file+datetree (concat org-directory "/journal.org"))
              "* %?\nEntered on %U\n  %i\n  %a")))
 
-
-
 (use-package quoted-scratch
   :load-path "~/.emacs.d/quoted-scratch/"
   :demand t
