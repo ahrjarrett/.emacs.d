@@ -1,4 +1,8 @@
 
+;;(when window-system (set-frame-size (selected-frame) 400 100))
+(add-to-list 'default-frame-alist '(height . 48))
+(add-to-list 'default-frame-alist '(width . 160))
+
 (use-package evil
    :ensure t
    :init (setq evil-want-C-i-jump nil)
@@ -32,13 +36,18 @@
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 
-;;(use-package color-theme
-;;  :ensure t)
-
+(use-package nord-theme
+  :ensure t
+  :defer t
+  :init (load-theme 'nord t))
+  
 (use-package zenburn-theme
   :ensure t
-  :init
-  (load-theme 'zenburn t))
+  :defer t)
+
+(use-package leuven-theme
+  :ensure t
+  :defer t)
 
 (global-set-key (kbd "C-s") 'swiper)
 (global-set-key (kbd "C-c c") 'org-capture)
@@ -118,23 +127,24 @@
 ;; NOTE: %i allows you to mark a block of text anywhere in Emacs,
 ;; run Org-Capture, and it will drop that text into the capture.
 (setq org-capture-templates
-      '(("a" "Appointment" entry (file+headline (concat org-directory "/google-calendar.org") "Appointments")
+      '(("a" "Appointment" entry (file+headline  (concat org-directory "/google-calendar.org") "Appointments")
              "* TODO %?\n:PROPERTIES:\n\n:END:\nDEADLINE: %^T \n %i\n")
-        ("n" "Note" entry (file+headline (concat org-directory "/notes.org") "Notes")
-             "* Note %?\n%i\n%T")
-        ("b" "Bookmark" entry (file+headline (concat org-directory "/index.org") "Bookmarks")
+        ("b" "Bookmark" entry (file+headline     (concat org-directory "/index.org") "Bookmarks")
              "* %^L %^g \n%T" :prepend t)
-        ("t" "Todo Item" entry (file+headline (concat org-directory "/todo.org") "Todo Items")
-             "* TODO %?\n%T" :prepend t)
-        ("j" "Journal" entry (file+datetree (concat org-directory "/journal.org"))
-             "* %?\nEntered on %U\n  %i\n  %a")))
+        ("j" "Journal" entry (file+datetree      (concat org-directory "/journal.org"))
+             "* %?\nEntered on %U\n  %i\n  %a")
+        ("n" "Note:" entry (file+headline         (concat org-directory "/notes.org") "Notes")
+             "* Note %? %^g \n%i\n%T")
+        ("t" "Todo Item" entry (file+headline    (concat org-directory "/todo.org") "Todo Items")
+             "* TODO %?\n%T" :prepend t)))
 
 (use-package quoted-scratch
   :load-path "~/.emacs.d/quoted-scratch/"
   :demand t
   :config
   (progn
-    (setq initial-scratch-message nil)
+    (setq initial-scratch-message nil
+          qs-show-auroville-quality nil)
     (add-hook 'emacs-startup-hook
               (lambda ()
                 (run-with-timer 1 nil 'qs-refresh-scratch-buffer)

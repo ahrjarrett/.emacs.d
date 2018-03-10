@@ -2,6 +2,13 @@
 #+AUTHOR: Andrew Jarrett
 #+EMAIL: ahrjarrett@gmail.com
 
+* Init
+#+BEGIN_SRC emacs-lisp
+  ;; Set frame size on startup:
+  (add-to-list 'default-frame-alist '(height . 56))
+  (add-to-list 'default-frame-alist '(width . 177))
+#+END_SRC
+
 * Evil-Mode
 [[https://github.com/emacs-evil/evil][Evil-mode on Github]]
 #+BEGIN_SRC emacs-lisp
@@ -53,13 +60,19 @@ Garbage collect at 20MG instead of 0.76MB to speed up some operations:
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-  ;;(use-package color-theme
-  ;;  :ensure t)
-
+  (use-package nord-theme
+    :ensure t
+    :defer t
+    :init (load-theme 'nord t))
+    
   (use-package zenburn-theme
     :ensure t
-    :init
-    (load-theme 'zenburn t))
+    :defer t)
+
+  (use-package leuven-theme
+    :ensure t
+    :defer t)
+
 #+END_SRC
 
 * Custom Keybindings
@@ -196,18 +209,19 @@ Garbage collect at 20MG instead of 0.76MB to speed up some operations:
 
 
 * Scratch
-The [[https://github.com/ahrjarrett/.emacs.d/blob/master/config.org]["quoted-scratch"]] package isn't on elpa/melpa, so you've gotta download and load it manually.
+The [[https://github.com/narendraj9/quoted-scratch][quoted scratch]] package isn't on elpa/melpa, so you've gotta download and load it manually.
 #+BEGIN_SRC emacs-lisp
-    (use-package quoted-scratch
-      :load-path "~/.emacs.d/quoted-scratch/"
-      :demand t
-      :config
-      (progn
-        (setq initial-scratch-message nil)
-        (add-hook 'emacs-startup-hook
-                  (lambda ()
-                    (run-with-timer 1 nil 'qs-refresh-scratch-buffer)
-                    (qs-refresh-quote-when-idle)))))
+  (use-package quoted-scratch
+    :load-path "~/.emacs.d/quoted-scratch/"
+    :demand t
+    :config
+    (progn
+      (setq initial-scratch-message nil
+            qs-show-auroville-quality nil)
+      (add-hook 'emacs-startup-hook
+                (lambda ()
+                  (run-with-timer 1 nil 'qs-refresh-scratch-buffer)
+                  (qs-refresh-quote-when-idle)))))
 #+END_SRC
 
 * Emacs Lisp

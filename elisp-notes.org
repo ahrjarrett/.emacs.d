@@ -1,0 +1,74 @@
+Entry: <2018-03-10 Sat>
+
+* NOTES FROM THE EMACS LISP MANUAL
+
+On types in general:
+
+"Objects of the same type have similar structures and may usually be used in the same contexts."
+
+** 4 Strings and Characters
+
+A string in Emacs Lisp is an array that contains an ordered sequence of
+characters.
+
+** 6 Sequences, Arrays, and Vectors
+
+A “list” represents a sequence of zero or more elements (which may be)
+any Lisp objects.
+
+   The following diagram shows the relationship between these types:
+
+               _____________________________________________
+              |                                             |
+              |          Sequence                           |
+              |  ______   ________________________________  |
+              | |      | |                                | |
+              | | List | |             Array              | |
+              | |      | |    ________       ________     | |
+              | |______| |   |        |     |        |    | |
+              |          |   | Vector |     | String |    | |
+              |          |   |________|     |________|    | |
+              |          |  ____________   _____________  | |
+              |          | |            | |             | | |
+              |          | | Char-table | | Bool-vector | | |
+              |          | |____________| |_____________| | |
+              |          |________________________________| |
+              |_____________________________________________|
+
+
+** 7 Hash Tables
+
+• Lookup in a hash table is extremely fast for large tables—in fact,
+the time required is essentially _independent_ of how many elements
+are stored in the table.
+
+• For smaller tables (a few tens of) elements alists may still be faster
+because hash tables have a more-or-less constant overhead.
+
+
+** 5.8 Association Lists
+
+An “association list”, or “alist” for short, records a mapping from keys
+to values.  It is a list of cons cells called “associations”: the CAR of
+each cons cell is the “key”, and the CDR is the “associated value”.(1)
+
+    • Association lists are often used to record information that you might
+      otherwise keep on a stack, since new associations may be added easily to
+      the front of the list.  When searching an association list for an
+      association with a given key, the first one found is returned, if there
+      is more than one.
+
+    • In Emacs Lisp, it is _not_ an error if an element of an association
+      list is not a cons cell.  The alist search functions simply ignore such
+      elements.  Many other versions of Lisp signal errors in such cases.
+
+** 8 Symbols
+
+A “symbol” is an object with a unique name.
+
+     • You can test whether an arbitrary Lisp object is a symbol with
+       ‘symbolp’:
+
+        -- Function: symbolp :: object -> Bool
+           This function returns ‘t’ if OBJECT is a symbol, ‘nil’ otherwise.
+
