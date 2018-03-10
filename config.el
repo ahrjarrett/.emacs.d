@@ -1,7 +1,7 @@
 
-;;(when window-system (set-frame-size (selected-frame) 400 100))
-(add-to-list 'default-frame-alist '(height . 48))
-(add-to-list 'default-frame-alist '(width . 160))
+;; Set frame size on startup:
+(add-to-list 'default-frame-alist '(height . 56))
+(add-to-list 'default-frame-alist '(width . 177))
 
 (use-package evil
    :ensure t

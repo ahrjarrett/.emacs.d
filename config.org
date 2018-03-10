@@ -3,49 +3,20 @@
 #+EMAIL: ahrjarrett@gmail.com
 
 * Init
+** Frame Defaults
 #+BEGIN_SRC emacs-lisp
   ;; Set frame size on startup:
   (add-to-list 'default-frame-alist '(height . 56))
   (add-to-list 'default-frame-alist '(width . 177))
 #+END_SRC
 
-* Evil-Mode
-[[https://github.com/emacs-evil/evil][Evil-mode on Github]]
-#+BEGIN_SRC emacs-lisp
-  (use-package evil
-     :ensure t
-     :init (setq evil-want-C-i-jump nil)
-     :config
-     (evil-mode 1))
-#+END_SRC
-
-This occur-mode hook allows me to hit =C-z= in a Magit buffer to turn on/off Evil bindings:
-#+BEGIN_SRC emacs-lisp
-  (add-hook 'occur-mode-hook
-            (lambda ()
-              (evil-add-hjkl-bindings occur-mode-map 'emacs
-                (kbd "/")       'evil-search-forward
-                (kbd "n")       'evil-search-next
-                (kbd "N")       'evil-search-previous
-                (kbd "C-d")     'evil-scroll-down
-                (kbd "C-u")     'evil-scroll-up)))
-#+END_SRC
-
-* More Better Defaults
+** More Better Defaults
 Garbage collect at 20MG instead of 0.76MB to speed up some operations:
 #+BEGIN_SRC emacs-lisp
   (setq gc-cons-threshold 20000000)
 #+END_SRC
 
-* Personal Variables
-#+BEGIN_SRC emacs-lisp
-  (setq user-full-name "Andrew Jarrett"
-        user-email-address "ahrjarrett@gmail.com")
-  ;; where to put emacs backup files
-  (setq backup-directory-alist `(("." . "~/.saves")))
-#+END_SRC
-
-* Interface Customization
+** Interface Customization
 #+BEGIN_SRC emacs-lisp
   ;; set font
   (add-to-list 'default-frame-alist '(font . "mononoki 14"))
@@ -75,82 +46,157 @@ Garbage collect at 20MG instead of 0.76MB to speed up some operations:
 
 #+END_SRC
 
-* Custom Keybindings
+** Personal Variables
+#+BEGIN_SRC emacs-lisp
+  (setq user-full-name "Andrew Jarrett"
+        user-email-address "ahrjarrett@gmail.com")
+  ;; where to put emacs backup files
+  (setq backup-directory-alist `(("." . "~/.saves")))
+#+END_SRC
+
+** Global Keybindings
 #+BEGIN_SRC emacs-lisp
   (global-set-key (kbd "C-s") 'swiper)
   (global-set-key (kbd "C-c c") 'org-capture)
   (global-set-key (kbd "C-c a") 'org-agenda)
 #+END_SRC
 
-* Which-Key
-#+BEGIN_SRC emacs-lisp
-  (use-package which-key
-    :ensure t
-    :config
-    (which-key-mode))
-#+END_SRC
-
-* Ivy
-[[https://github.com/abo-abo/swiper][Repository for Ivy, Swiper & Counsel]]
-#+BEGIN_SRC emacs-lisp
-  (use-package ivy
-    :ensure t
-    :config
-    (ivy-mode 1))
-
-  (use-package counsel
-    :ensure t)
-#+END_SRC
-
-* Dired
+** Filesystem Navigation
+*** Dired
 #+BEGIN_SRC emacs-lisp
   ;; allow me to open a file/dir in dired w/o creating another buffer by hitting `a`
   (put 'dired-find-alternate-file 'disabled nil)
 #+END_SRC
 
-* Try
+* Language & Environment Support
+** LISPs
+*** Emacs Lisp
 #+BEGIN_SRC emacs-lisp
-  (use-package try
+  ;; display “lambda” as “λ”
+  (global-prettify-symbols-mode 1)
+#+END_SRC
+**** Scratch
+The [[https://github.com/narendraj9/quoted-scratch][quoted scratch]] package isn't on elpa/melpa, so you've gotta download and load it manually.
+#+BEGIN_SRC emacs-lisp
+  (use-package quoted-scratch
+    :load-path "~/.emacs.d/quoted-scratch/"
+    :demand t
+    :config
+    (progn
+      (setq initial-scratch-message nil
+            qs-show-auroville-quality nil)
+      (add-hook 'emacs-startup-hook
+                (lambda ()
+                  (run-with-timer 1 nil 'qs-refresh-scratch-buffer)
+                  (qs-refresh-quote-when-idle)))))
+#+END_SRC
+
+**** Macrostep
+[[https://github.com/joddie/macrostep][Macrostep on Github]]
+#+BEGIN_SRC emacs-lisp
+  (use-package macrostep
+    :ensure t
+    :bind ("C-c e m" . macrostep-expand)
+          ("C-c e c" . macrostep-collapse))
+#+END_SRC
+*** Parinfer
+[[https://github.com/DogLooksGood/parinfer-mode][parinfer-mode on Github]]
+
+Right now these are just the default settings, minus disabling lispy and paredit support.
+#+BEGIN_SRC emacs-lisp
+  (use-package parinfer
+    :ensure t
+    :bind
+    (("C-," . parinfer-toggle-mode))
+    :init
+    (progn
+      (setq parinfer-extensions
+            '(defaults       ; should be included.
+              pretty-parens  ; different paren styles for different modes.
+              evil           ; If you use Evil.
+              ;; lispy          ; If you use Lispy. With this extension, you should install Lispy and do not enable lispy-mode directly.
+              ;; paredit        ; Introduce some paredit commands.
+              smart-tab      ; C-b & C-f jump positions and smart shift with tab & S-tab.
+              smart-yank))   ; Yank behavior depend on mode.
+      (add-hook 'clojure-mode-hook #'parinfer-mode)
+      (add-hook 'emacs-lisp-mode-hook #'parinfer-mode)
+      (add-hook 'common-lisp-mode-hook #'parinfer-mode)
+      (add-hook 'scheme-mode-hook #'parinfer-mode)
+      (add-hook 'lisp-mode-hook #'parinfer-mode)))
+#+END_SRC
+*** Clojure
+[[https://github.com/clojure-emacs/clojure-mode][Clojure-Mode on Github]]
+#+BEGIN_SRC emacs-lisp
+(use-package clojure-mode
+  :ensure t
+  :config)
+#+END_SRC
+
+**** CIDER
+#+BEGIN_SRC emacs-lisp
+  (use-package cider
     :ensure t)
 #+END_SRC
 
-* Auto-Complete
+** Web
+*** JS2 Mode
+[[https://elpa.gnu.org/packages/js2-mode.html][js2-mode on ELPA]]
 #+BEGIN_SRC emacs-lisp
-  (use-package auto-complete
+  (use-package js2-mode
     :ensure t
+    :mode (("\\.js$" . js2-mode)) ;; makes sure we don't use for jsx files, too
+    :interpreter ("node" . js2-mode)
+    :config
+    (setq-default js2-strict-missing-semi-warning nil)
+    (add-hook 'js2-mode-hook (lambda () (setq js2-basic-offset 2))))
+#+END_SRC
+
+*** Web Mode
+[[http://web-mode.org/][web-mode docs]]
+
+TODO really dig into react, make sure you can use arrow fn in component attribute.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package web-mode
+    :ensure t
+    :mode (("\\.html\\'" . web-mode ))
+    :mode (("\\.css\\'" . web-mode ))
     :init
     (progn
-      (ac-config-default)
-      (global-auto-complete-mode t)))
+      (setq web-mode-markup-indent-offset 2)
+      (setq web-mode-code-indent-offset 2)
+      (setq web-mode-css-indent-offset 2)
+
+      (setq web-mode-enable-auto-pairing t)
+      (setq web-mode-enable-css-colorization t)))
+
 #+END_SRC
 
-* Projectile
-[[https://github.com/bbatsov/projectile][Projectile on Github]]
-#+BEGIN_SRC emacs-lisp
-  (use-package projectile
-    :ensure t
-    :config
-    (projectile-global-mode)
-    ;; use ivy for pattern matching and completion
-    (setq projectile-completion-system 'ivy))
-#+END_SRC
+#+RESULTS:
 
-* Git
-** Magit
-[[https://github.com/magit/magit][Magit on Github]]
+*** LESS
 #+BEGIN_SRC emacs-lisp
-  (use-package magit
+  (use-package less-css-mode
     :ensure t
-    :bind (("C-c g" . magit-status)))
-#+END_SRC
+    ;:commands less-css-mode
+    ;:config
+    ;(use-package js2-mode)
+    ;(use-package skewer-less)
+    )
 
-** Git Gutter
-[[https://github.com/syohex/emacs-git-gutter][Git Gutter's Github Repo]]
+#+END_SRC
+*** Prettier JS
+DONE Once you get web-mode working, uncomment the line that adds a hook for prettier.
+
 #+BEGIN_SRC emacs-lisp
-  (use-package git-gutter
-    :ensure t
-    :init
-    (global-git-gutter-mode +1))
+(use-package prettier-js
+  :ensure t
+  :init
+  (add-hook 'js2-mode-hook 'prettier-js-mode)
+  (add-hook 'web-mode-hook 'prettier-js-mode)
+  (setq prettier-js-args
+        '("--trailing-comma" "all"
+          "--single-quote" "true")))
 #+END_SRC
 
 * Org-Mode
@@ -206,71 +252,115 @@ Garbage collect at 20MG instead of 0.76MB to speed up some operations:
                "* TODO %?\n%T" :prepend t)))
 
 #+END_SRC
-
-
-* Scratch
-The [[https://github.com/narendraj9/quoted-scratch][quoted scratch]] package isn't on elpa/melpa, so you've gotta download and load it manually.
+* All Other Packages
+** Evil-Mode
+[[https://github.com/emacs-evil/evil][Evil-mode on Github]]
 #+BEGIN_SRC emacs-lisp
-  (use-package quoted-scratch
-    :load-path "~/.emacs.d/quoted-scratch/"
-    :demand t
+  (use-package evil
+     :ensure t
+     :init (setq evil-want-C-i-jump nil)
+     :config
+     (evil-mode 1))
+#+END_SRC
+
+This occur-mode hook allows me to hit =C-z= in a Magit buffer to turn on/off Evil bindings:
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'occur-mode-hook
+            (lambda ()
+              (evil-add-hjkl-bindings occur-mode-map 'emacs
+                (kbd "/")       'evil-search-forward
+                (kbd "n")       'evil-search-next
+                (kbd "N")       'evil-search-previous
+                (kbd "C-d")     'evil-scroll-down
+                (kbd "C-u")     'evil-scroll-up)))
+#+END_SRC
+
+** Which-Key
+#+BEGIN_SRC emacs-lisp
+  (use-package which-key
+    :ensure t
     :config
-    (progn
-      (setq initial-scratch-message nil
-            qs-show-auroville-quality nil)
-      (add-hook 'emacs-startup-hook
-                (lambda ()
-                  (run-with-timer 1 nil 'qs-refresh-scratch-buffer)
-                  (qs-refresh-quote-when-idle)))))
+    (which-key-mode))
 #+END_SRC
 
-* Emacs Lisp
+** Ivy
+[[https://github.com/abo-abo/swiper][Repository for Ivy, Swiper & Counsel]]
 #+BEGIN_SRC emacs-lisp
-  ;; display “lambda” as “λ”
-  (global-prettify-symbols-mode 1)
-#+END_SRC
+  (use-package ivy
+    :ensure t
+    :config
+    (ivy-mode 1))
 
-* Clojure
-[[https://github.com/clojure-emacs/clojure-mode][Clojure-Mode on Github]]
-#+BEGIN_SRC emacs-lisp
-(use-package clojure-mode
-  :ensure t
-  :config)
-#+END_SRC
-
-** CIDER
-#+BEGIN_SRC emacs-lisp
-  (use-package cider
+  (use-package counsel
     :ensure t)
 #+END_SRC
 
-* Parinfer
-[[https://github.com/DogLooksGood/parinfer-mode][parinfer-mode on Github]]
-
-Right now these are just the default settings, minus disabling lispy and paredit support.
+** Try
 #+BEGIN_SRC emacs-lisp
-  (use-package parinfer
-    :ensure t
-    :bind
-    (("C-," . parinfer-toggle-mode))
-    :init
-    (progn
-      (setq parinfer-extensions
-            '(defaults       ; should be included.
-              pretty-parens  ; different paren styles for different modes.
-              evil           ; If you use Evil.
-              ;; lispy          ; If you use Lispy. With this extension, you should install Lispy and do not enable lispy-mode directly.
-              ;; paredit        ; Introduce some paredit commands.
-              smart-tab      ; C-b & C-f jump positions and smart shift with tab & S-tab.
-              smart-yank))   ; Yank behavior depend on mode.
-      (add-hook 'clojure-mode-hook #'parinfer-mode)
-      (add-hook 'emacs-lisp-mode-hook #'parinfer-mode)
-      (add-hook 'common-lisp-mode-hook #'parinfer-mode)
-      (add-hook 'scheme-mode-hook #'parinfer-mode)
-      (add-hook 'lisp-mode-hook #'parinfer-mode)))
+  (use-package try
+    :ensure t)
 #+END_SRC
 
-* Paredit [disabled]
+** Auto-Complete
+#+BEGIN_SRC emacs-lisp
+  (use-package auto-complete
+    :ensure t
+    :init
+    (progn
+      (ac-config-default)
+      (global-auto-complete-mode t)))
+#+END_SRC
+
+** Projectile
+[[https://github.com/bbatsov/projectile][Projectile on Github]]
+#+BEGIN_SRC emacs-lisp
+  (use-package projectile
+    :ensure t
+    :config
+    (projectile-global-mode)
+    ;; use ivy for pattern matching and completion
+    (setq projectile-completion-system 'ivy))
+#+END_SRC
+
+** Git
+*** Magit
+[[https://github.com/magit/magit][Magit on Github]]
+#+BEGIN_SRC emacs-lisp
+  (use-package magit
+    :ensure t
+    :bind (("C-c g" . magit-status)))
+#+END_SRC
+
+*** Git Gutter
+[[https://github.com/syohex/emacs-git-gutter][Git Gutter's Github Repo]]
+#+BEGIN_SRC emacs-lisp
+  (use-package git-gutter
+    :ensure t
+    :init
+    (global-git-gutter-mode +1))
+#+END_SRC
+
+* Miscellaneous
+** Sunshine
+[[https://github.com/aaronbieber/sunshine.el][Sunshine.el on Github]]
+#+BEGIN_SRC emacs-lisp
+  (use-package sunshine
+    :ensure t
+    :commands sunshine-forecast
+    :config
+    (defun echo-file-contents (file-path)
+      "Return FILE-PATH's contents."
+      (with-temp-buffer
+        (insert-file-contents file-path)
+        (buffer-string)))
+    (setq sunshine-appid (echo-file-contents
+                          (expand-file-name "sunshine.key" user-emacs-directory)))
+    (setq sunshine-location "Denver, CO, USA")
+    (setq sunshine-show-icons t))
+#+END_SRC
+* Todos
+** TODO Install & Configure CIDER (file under LISPs -> Clojure)
+** TODO Paredit [disabled]
 Currently disabled as I'm trying [[https://github.com/shaunlebron/parinfer][parinfer]]
 
 #+BEGIN_SRC emacs-lisp
@@ -288,92 +378,4 @@ Currently disabled as I'm trying [[https://github.com/shaunlebron/parinfer][pari
   ;;    ;; turn on paredit for clojure:
   ;;    (add-hook 'clojure-mode-hook #'paredit-mode))
 #+END_SRC
-
-* Macrostep
-[[https://github.com/joddie/macrostep][Macrostep on Github]]
-#+BEGIN_SRC emacs-lisp
-  (use-package macrostep
-    :ensure t
-    :bind ("C-c e m" . macrostep-expand)
-          ("C-c e c" . macrostep-collapse))
-#+END_SRC
-
-* JS2 Mode
-[[https://elpa.gnu.org/packages/js2-mode.html][js2-mode on ELPA]]
-#+BEGIN_SRC emacs-lisp
-  (use-package js2-mode
-    :ensure t
-    :mode (("\\.js$" . js2-mode)) ;; makes sure we don't use for jsx files, too
-    :interpreter ("node" . js2-mode)
-    :config
-    (setq-default js2-strict-missing-semi-warning nil)
-    (add-hook 'js2-mode-hook (lambda () (setq js2-basic-offset 2))))
-#+END_SRC
-
-* Web Mode
-[[http://web-mode.org/][web-mode docs]]
-
-TODO really dig into react, make sure you can use arrow fn in component attribute.
-
-#+BEGIN_SRC emacs-lisp
-  (use-package web-mode
-    :ensure t
-    :mode (("\\.html\\'" . web-mode ))
-    :mode (("\\.css\\'" . web-mode ))
-    :init
-    (progn
-      (setq web-mode-markup-indent-offset 2)
-      (setq web-mode-code-indent-offset 2)
-      (setq web-mode-css-indent-offset 2)
-
-      (setq web-mode-enable-auto-pairing t)
-      (setq web-mode-enable-css-colorization t)))
-
-#+END_SRC
-
-#+RESULTS:
-
-* LESS
-#+BEGIN_SRC emacs-lisp
-  (use-package less-css-mode
-    :ensure t
-    ;:commands less-css-mode
-    ;:config
-    ;(use-package js2-mode)
-    ;(use-package skewer-less)
-    )
-
-#+END_SRC
-* Prettier JS
-DONE Once you get web-mode working, uncomment the line that adds a hook for prettier.
-
-#+BEGIN_SRC emacs-lisp
-(use-package prettier-js
-  :ensure t
-  :init
-  (add-hook 'js2-mode-hook 'prettier-js-mode)
-  (add-hook 'web-mode-hook 'prettier-js-mode)
-  (setq prettier-js-args
-        '("--trailing-comma" "all"
-          "--single-quote" "true")))
-#+END_SRC
-
-* Sunshine
-[[https://github.com/aaronbieber/sunshine.el][Sunshine.el on Github]]
-#+BEGIN_SRC emacs-lisp
-  (use-package sunshine
-    :ensure t
-    :commands sunshine-forecast
-    :config
-    (defun echo-file-contents (file-path)
-      "Return FILE-PATH's contents."
-      (with-temp-buffer
-        (insert-file-contents file-path)
-        (buffer-string)))
-    (setq sunshine-appid (echo-file-contents
-                          (expand-file-name "sunshine.key" user-emacs-directory)))
-    (setq sunshine-location "Denver, CO, USA")
-    (setq sunshine-show-icons t))
-#+END_SRC
-* Todo
-- DONE Put custom keybindings in Org-Mode into Custom Keybindings section
+** DONE Put custom keybindings in Org-Mode into Custom Keybindings section
