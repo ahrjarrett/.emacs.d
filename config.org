@@ -46,6 +46,12 @@ Garbage collect at 20MG instead of 0.76MB to speed up some operations:
 
 #+END_SRC
 
+** PATH
+#+BEGIN_SRC emacs-lisp
+(setenv "PATH" (concat "/usr/local/smlnj/bin:" (getenv "PATH")))
+(setq exec-path (cons "/usr/local/smlnj/bin"  exec-path))
+#+END_SRC
+
 ** Personal Variables
 #+BEGIN_SRC emacs-lisp
   (setq user-full-name "Andrew Jarrett"
@@ -138,7 +144,70 @@ Right now these are just the default settings, minus disabling lispy and paredit
     :ensure t)
 #+END_SRC
 
+** ML
+[[https://elpa.gnu.org/packages/sml-mode.html][SML Mode on ELPA]]
+
+#+BEGIN_SRC emacs-lisp
+  (use-package sml-mode
+    :ensure t
+    :mode (("\\.sml\\'" . sml-mode)))
+#+END_SRC
+
 ** Web
+*** indium
+#+BEGIN_QUOTE
+Indium is a JavaScript development environment for Emacs.
+#+END_QUOTE
+
+[[https://indium.readthedocs.io/en/latest/][Docs]] [[https://github.com/NicolasPetton/Indium][GitHub]]
+
+Indium suppoNodejs >= 8.x is required for Indium to work.
+Indium is availabe on MELPA, MELPA Stable.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package indium
+    :ensure t)
+
+#+END_SRC
+
+Useful functions:
+
+1. _Start a process_: =M-x indium-run-node=
+   Brings this up in the mini-buffer =Node command: node <point>=
+   
+   This is what the REPL brings up when you run vanilla node:
+   
+   #+BEGIN_SRC 
+   Getting started:
+   
+   - Press <<return>> on links to open an inspector
+   - Press <M-p> and <M-n> to navigate in the history
+   - Use <M-x indium-scratch> to open a scratch buffer for JS evaluation
+   - Press <C-h m> to see a list of available keybindings
+   - Press <C-c C-o> to clear the output
+   
+   To disconnect from the JavaScript process, press <C-c C-q>.
+   Doing this will also close all inspectors and debugger buffers
+   connected to the process.
+   #+END_SRC
+   
+   Necessary REPL command cheat sheet:
+   
+   | Command    | Behavior                            |
+   |------------+-------------------------------------|
+   | <<return>> | (On links) Open an inspector        |
+   | <C-h m>    | See a list of available keybindings |
+   | <C-c C-o>  | Clear input                         |
+   | <C-c C-q>  | Disconnect from JS process          |
+
+2. _Restart a process_: =M-x-restart-node=
+
+3. _JavaScript Scratch Buffer_: =M-x indium-scratch=
+
+   Use <M-x indium-scratch> to open a scratch buffer for JS evaluation
+
+   
+
 *** JS2 Mode
 [[https://elpa.gnu.org/packages/js2-mode.html][js2-mode on ELPA]]
 #+BEGIN_SRC emacs-lisp
@@ -301,7 +370,28 @@ This occur-mode hook allows me to hit =C-z= in a Magit buffer to turn on/off Evi
     :ensure t)
 #+END_SRC
 
-** Auto-Complete
+** Completion
+*** Company-Mode
+#+BEGIN_SRC emacs-lisp
+  (use-package company               
+    :ensure t
+    :defer t
+    :init (global-company-mode)
+    :config
+    (progn
+      ;; Use Company for completion
+      (bind-key [remap completion-at-point] #'company-complete company-mode-map)
+
+      (setq company-tooltip-align-annotations t
+            ;; Easy navigation to candidates with M-<n>
+            ;; Does this also work in reverse with M-<p>?
+            company-show-numbers t)
+      (setq company-dabbrev-downcase nil))
+    :diminish company-mode)
+
+#+END_SRC
+
+*** TODO Auto-Complete [disabled]
 #+BEGIN_SRC emacs-lisp
   (use-package auto-complete
     :ensure t
