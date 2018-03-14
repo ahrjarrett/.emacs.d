@@ -6,4 +6,4 @@ This is my Emacs configuration. =init.el= basically installs =use-package= and g
 
 Rewritten top-to-bottom on February 15, 2018 to support GUI Emacs.
 
-You're free to use whatever you'd like but do so at your own risk. I do not assume any liability whatsoever.
+You're free to use whatever you'd like but do so at your own risk, etc etc.

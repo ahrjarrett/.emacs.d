@@ -1,4 +1,3 @@
-
 ;; Set frame size on startup:
 (add-to-list 'default-frame-alist '(height . 56))
 (add-to-list 'default-frame-alist '(width . 177))
@@ -20,7 +19,7 @@
   :ensure t
   :defer t
   :init (load-theme 'nord t))
-  
+
 (use-package zenburn-theme
   :ensure t
   :defer t)
@@ -31,6 +30,11 @@
 
 (setenv "PATH" (concat "/usr/local/smlnj/bin:" (getenv "PATH")))
 (setq exec-path (cons "/usr/local/smlnj/bin"  exec-path))
+
+;; add =vendor= to default directory
+;; will this break other stuff?
+(let ((default-directory  "~/.emacs.d/vendor/"))
+  (normal-top-level-add-subdirs-to-load-path))
 
 (setq user-full-name "Andrew Jarrett"
       user-email-address "ahrjarrett@gmail.com")

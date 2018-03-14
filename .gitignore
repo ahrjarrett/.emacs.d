@@ -5,6 +5,8 @@ eshell/
 themes/
 url/
 quoted-scratch/
+org-mode/
+vendor/
 
 # temp files
 *.elc

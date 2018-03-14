@@ -28,5 +28,10 @@
 (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
 (setq exec-path (append exec-path '("/usr/local/bin")))
 
+;; Add path to manually installed org mode:
+(add-to-list 'load-path "~/.emacs.d/org-mode/lisp")
+;; add contributed libraries not natively available in Emacs:
+(add-to-list 'load-path "~/.emacs.d/org-mode/contrib/lisp")
+
 ;; use literate .org file for the rest of my config
 (org-babel-load-file (expand-file-name "~/.emacs.d/config.org"))

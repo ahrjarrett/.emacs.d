@@ -47,9 +47,23 @@ Garbage collect at 20MG instead of 0.76MB to speed up some operations:
 #+END_SRC
 
 ** PATH
+
+Consider moving this into [[file:init.el][init.el]]?
+
 #+BEGIN_SRC emacs-lisp
-(setenv "PATH" (concat "/usr/local/smlnj/bin:" (getenv "PATH")))
-(setq exec-path (cons "/usr/local/smlnj/bin"  exec-path))
+  (setenv "PATH" (concat "/usr/local/smlnj/bin:" (getenv "PATH")))
+  (setq exec-path (cons "/usr/local/smlnj/bin"  exec-path))
+
+  ;; Snippet to load a directory, making al .el files available to require
+  (defun load-directory (dir)
+    (let ((load-it (lambda (f)
+                    (load-file (concat (file-name-as-directory dir) f)))))
+     
+        (mapc load-it (directory-files dir nil "\\.el$"))))
+
+  ;; add =vendor= to default directory
+  (load-directory "~/.emacs.d/vendor/")
+
 #+END_SRC
 
 ** Personal Variables
@@ -152,6 +166,8 @@ Right now these are just the default settings, minus disabling lispy and paredit
     :ensure t
     :mode (("\\.sml\\'" . sml-mode)))
 #+END_SRC
+
+
 
 ** Web
 *** indium
@@ -270,6 +286,9 @@ DONE Once you get web-mode working, uncomment the line that adds a hook for pret
 
 * Org-Mode
 ** Basic Org Config
+
+The latest version of org-mode is manually installed in this directory under [[file:org-mode/][org-mode/]]. This is to provide more extensive language support for org-babel.
+
 #+BEGIN_SRC emacs-lisp
   (setq org-ellipsis "  ⋱ ")
   (setq org-startup-indented t)
@@ -289,6 +308,28 @@ DONE Once you get web-mode working, uncomment the line that adds a hook for pret
 
   (setq org-agenda-files (list (concat org-directory "/google-calendar.org")
                                (concat org-directory "/index.org")))
+#+END_SRC
+
+** Org-Babel
+
+*** SML
+
+[[https://github.com/swannodette/ob-sml][ob-sml on GitHub]]
+
+#+BEGIN_QUOTE
+Start a sml REPL with =M-x run-sml=. You should now be able to place your cursor in the code block and evaluate with =C-c C-c= and the contents of your code block will evaluate inline.
+#+END_QUOTE
+
+#+BEGIN_SRC emacs-lisp
+  (require 'ob-sml nil 'noerror)
+#+END_SRC
+
+*** Kick it all off
+
+#+BEGIN_SRC emacs-lisp
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((sml . t)))
 #+END_SRC
 
 ** Org Autocomplete
