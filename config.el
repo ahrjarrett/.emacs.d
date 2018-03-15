@@ -31,10 +31,15 @@
 (setenv "PATH" (concat "/usr/local/smlnj/bin:" (getenv "PATH")))
 (setq exec-path (cons "/usr/local/smlnj/bin"  exec-path))
 
+;; Snippet to load a directory, making al .el files available to require
+(defun load-directory (dir)
+  (let ((load-it (lambda (f)
+                  (load-file (concat (file-name-as-directory dir) f)))))
+
+      (mapc load-it (directory-files dir nil "\\.el$"))))
+
 ;; add =vendor= to default directory
-;; will this break other stuff?
-(let ((default-directory  "~/.emacs.d/vendor/"))
-  (normal-top-level-add-subdirs-to-load-path))
+(load-directory "~/.emacs.d/vendor/")
 
 (setq user-full-name "Andrew Jarrett"
       user-email-address "ahrjarrett@gmail.com")
@@ -158,6 +163,12 @@
 
 (setq org-agenda-files (list (concat org-directory "/google-calendar.org")
                              (concat org-directory "/index.org")))
+
+(require 'ob-sml nil 'noerror)
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((sml . t)))
 
 (use-package org-ac
   :ensure t

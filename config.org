@@ -79,6 +79,8 @@ Consider moving this into [[file:init.el][init.el]]?
   (global-set-key (kbd "C-s") 'swiper)
   (global-set-key (kbd "C-c c") 'org-capture)
   (global-set-key (kbd "C-c a") 'org-agenda)
+  (global-set-key (kbd "<C-M-up>") 'enlarge-window-horizontally)
+  (global-set-key (kbd "<C-M-down>") 'shrink-window-horizontally)
 #+END_SRC
 
 ** Filesystem Navigation
