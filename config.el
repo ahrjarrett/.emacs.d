@@ -28,6 +28,10 @@
   :ensure t
   :defer t)
 
+(use-package sublime-themes
+  :ensure t
+  :defer t)
+
 (setenv "PATH" (concat "/usr/local/smlnj/bin:" (getenv "PATH")))
 (setq exec-path (cons "/usr/local/smlnj/bin"  exec-path))
 
@@ -49,6 +53,8 @@
 (global-set-key (kbd "C-s") 'swiper)
 (global-set-key (kbd "C-c c") 'org-capture)
 (global-set-key (kbd "C-c a") 'org-agenda)
+(global-set-key (kbd "<C-M-up>") 'enlarge-window-horizontally)
+(global-set-key (kbd "<C-M-down>") 'shrink-window-horizontally)
 
 ;; allow me to open a file/dir in dired w/o creating another buffer by hitting `a`
 (put 'dired-find-alternate-file 'disabled nil)

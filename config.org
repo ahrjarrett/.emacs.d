@@ -35,7 +35,7 @@ Garbage collect at 20MG instead of 0.76MB to speed up some operations:
     :ensure t
     :defer t
     :init (load-theme 'nord t))
-    
+
   (use-package zenburn-theme
     :ensure t
     :defer t)
@@ -44,6 +44,9 @@ Garbage collect at 20MG instead of 0.76MB to speed up some operations:
     :ensure t
     :defer t)
 
+  (use-package sublime-themes
+    :ensure t
+    :defer t)
 #+END_SRC
 
 ** PATH
@@ -364,6 +367,20 @@ Start a sml REPL with =M-x run-sml=. You should now be able to place your cursor
                "* TODO %?\n%T" :prepend t)))
 
 #+END_SRC
+
+** GitHub Markdown Export
+
+[[https://github.com/larstvei/ox-gfm][ox-gfm on GitHub]]
+[[https://melpa.org/#/ox-gfm][ox-gfm on MELPA]]
+
+#+BEGIN_SRC emacs-lisp
+  (use-package ox-gfm
+    :ensure t)
+
+  (eval-after-load "org"
+    '(require 'ox-gfm nil t))
+#+END_SRC
+
 * All Other Packages
 ** Evil-Mode
 [[https://github.com/emacs-evil/evil][Evil-mode on Github]]
