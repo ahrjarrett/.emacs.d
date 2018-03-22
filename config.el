@@ -110,9 +110,6 @@
   :ensure t
   :mode (("\\.sml\\'" . sml-mode)))
 
-(use-package indium
-  :ensure t)
-
 (use-package js2-mode
   :ensure t
   :mode (("\\.js$" . js2-mode)) ;; makes sure we don't use for jsx files, too
@@ -120,6 +117,9 @@
   :config
   (setq-default js2-strict-missing-semi-warning nil)
   (add-hook 'js2-mode-hook (lambda () (setq js2-basic-offset 2))))
+
+(use-package rjsx-mode
+  :ensure t)
 
 (use-package web-mode
   :ensure t
@@ -142,14 +142,14 @@
   ;(use-package skewer-less)
   )
 
-(use-package prettier-js
-  :ensure t
-  :init
-  (add-hook 'js2-mode-hook 'prettier-js-mode)
-  (add-hook 'web-mode-hook 'prettier-js-mode)
-  (setq prettier-js-args
-        '("--trailing-comma" "all"
-          "--single-quote" "true")))
+;;(use-package prettier-js
+;;  :ensure t
+;;  :init
+;;  (add-hook 'js2-mode-hook 'prettier-js-mode)
+;;  (add-hook 'web-mode-hook 'prettier-js-mode)
+;;  (setq prettier-js-args
+;;        '("--trailing-comma" "all"
+;;          "--single-quote" "true")))
 
 (setq org-ellipsis "  ⋱ ")
 (setq org-startup-indented t)
@@ -303,3 +303,6 @@
 
 ;;    ;; turn on paredit for clojure:
 ;;    (add-hook 'clojure-mode-hook #'paredit-mode))
+
+;;(use-package indium
+;;  :ensure t)

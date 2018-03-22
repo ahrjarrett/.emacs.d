@@ -165,11 +165,17 @@ Right now these are just the default settings, minus disabling lispy and paredit
 
 ** ML
 [[https://elpa.gnu.org/packages/sml-mode.html][SML Mode on ELPA]]
-
 #+BEGIN_SRC emacs-lisp
   (use-package sml-mode
     :ensure t
     :mode (("\\.sml\\'" . sml-mode)))
+#+END_SRC
+
+Reason Mode on GitHub
+#+BEGIN_SRC emacs-lisp
+  (use-package reason-mode
+    :ensure t
+    :mode ("\\.rei?'" . reason-mode))
 #+END_SRC
 
 
