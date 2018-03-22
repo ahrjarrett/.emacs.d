@@ -200,6 +200,12 @@
         ("t" "Todo Item" entry (file+headline    (concat org-directory "/todo.org") "Todo Items")
              "* TODO %?\n%T" :prepend t)))
 
+(use-package ox-gfm
+  :ensure t)
+
+(eval-after-load "org"
+  '(require 'ox-gfm nil t))
+
 (use-package evil
    :ensure t
    :init (setq evil-want-C-i-jump nil)

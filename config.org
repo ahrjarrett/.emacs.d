@@ -173,62 +173,7 @@ Right now these are just the default settings, minus disabling lispy and paredit
 #+END_SRC
 
 
-
 ** Web
-*** indium
-#+BEGIN_QUOTE
-Indium is a JavaScript development environment for Emacs.
-#+END_QUOTE
-
-[[https://indium.readthedocs.io/en/latest/][Docs]] [[https://github.com/NicolasPetton/Indium][GitHub]]
-
-Indium suppoNodejs >= 8.x is required for Indium to work.
-Indium is availabe on MELPA, MELPA Stable.
-
-#+BEGIN_SRC emacs-lisp
-  (use-package indium
-    :ensure t)
-
-#+END_SRC
-
-Useful functions:
-
-1. _Start a process_: =M-x indium-run-node=
-   Brings this up in the mini-buffer =Node command: node <point>=
-   
-   This is what the REPL brings up when you run vanilla node:
-   
-   #+BEGIN_SRC 
-   Getting started:
-   
-   - Press <<return>> on links to open an inspector
-   - Press <M-p> and <M-n> to navigate in the history
-   - Use <M-x indium-scratch> to open a scratch buffer for JS evaluation
-   - Press <C-h m> to see a list of available keybindings
-   - Press <C-c C-o> to clear the output
-   
-   To disconnect from the JavaScript process, press <C-c C-q>.
-   Doing this will also close all inspectors and debugger buffers
-   connected to the process.
-   #+END_SRC
-   
-   Necessary REPL command cheat sheet:
-   
-   | Command    | Behavior                            |
-   |------------+-------------------------------------|
-   | <<return>> | (On links) Open an inspector        |
-   | <C-h m>    | See a list of available keybindings |
-   | <C-c C-o>  | Clear input                         |
-   | <C-c C-q>  | Disconnect from JS process          |
-
-2. _Restart a process_: =M-x-restart-node=
-
-3. _JavaScript Scratch Buffer_: =M-x indium-scratch=
-
-   Use <M-x indium-scratch> to open a scratch buffer for JS evaluation
-
-   
-
 *** JS2 Mode
 [[https://elpa.gnu.org/packages/js2-mode.html][js2-mode on ELPA]]
 #+BEGIN_SRC emacs-lisp
@@ -239,6 +184,14 @@ Useful functions:
     :config
     (setq-default js2-strict-missing-semi-warning nil)
     (add-hook 'js2-mode-hook (lambda () (setq js2-basic-offset 2))))
+#+END_SRC
+*** React/JSX
+
+[[https://github.com/felipeochoa/rjsx-mode][rjsx-mode on GitHub]]
+
+#+BEGIN_SRC emacs-lisp
+  (use-package rjsx-mode
+    :ensure t)
 #+END_SRC
 
 *** Web Mode
@@ -279,14 +232,14 @@ TODO really dig into react, make sure you can use arrow fn in component attribut
 DONE Once you get web-mode working, uncomment the line that adds a hook for prettier.
 
 #+BEGIN_SRC emacs-lisp
-(use-package prettier-js
-  :ensure t
-  :init
-  (add-hook 'js2-mode-hook 'prettier-js-mode)
-  (add-hook 'web-mode-hook 'prettier-js-mode)
-  (setq prettier-js-args
-        '("--trailing-comma" "all"
-          "--single-quote" "true")))
+;;(use-package prettier-js
+;;  :ensure t
+;;  :init
+;;  (add-hook 'js2-mode-hook 'prettier-js-mode)
+;;  (add-hook 'web-mode-hook 'prettier-js-mode)
+;;  (setq prettier-js-args
+;;        '("--trailing-comma" "all"
+;;          "--single-quote" "true")))
 #+END_SRC
 
 * Org-Mode
@@ -508,7 +461,7 @@ This occur-mode hook allows me to hit =C-z= in a Magit buffer to turn on/off Evi
     (setq sunshine-location "Denver, CO, USA")
     (setq sunshine-show-icons t))
 #+END_SRC
-* Todos
+* Todo
 ** TODO Install & Configure CIDER (file under LISPs -> Clojure)
 ** TODO Paredit [disabled]
 Currently disabled as I'm trying [[https://github.com/shaunlebron/parinfer][parinfer]]
@@ -528,4 +481,56 @@ Currently disabled as I'm trying [[https://github.com/shaunlebron/parinfer][pari
   ;;    ;; turn on paredit for clojure:
   ;;    (add-hook 'clojure-mode-hook #'paredit-mode))
 #+END_SRC
+** TODO indium [disabled]
+#+BEGIN_QUOTE
+Indium is a JavaScript development environment for Emacs.
+#+END_QUOTE
+
+[[https://indium.readthedocs.io/en/latest/][Docs]] [[https://github.com/NicolasPetton/Indium][GitHub]]
+
+Indium suppoNodejs >= 8.x is required for Indium to work.
+Indium is availabe on MELPA, MELPA Stable.
+
+#+BEGIN_SRC emacs-lisp
+  ;;(use-package indium
+  ;;  :ensure t)
+
+#+END_SRC
+
+Useful functions:
+
+1. _Start a process_: =M-x indium-run-node=
+   Brings this up in the mini-buffer =Node command: node <point>=
+   
+   This is what the REPL brings up when you run vanilla node:
+   
+   #+BEGIN_SRC 
+   Getting started:
+   
+   - Press <<return>> on links to open an inspector
+   - Press <M-p> and <M-n> to navigate in the history
+   - Use <M-x indium-scratch> to open a scratch buffer for JS evaluation
+   - Press <C-h m> to see a list of available keybindings
+   - Press <C-c C-o> to clear the output
+   
+   To disconnect from the JavaScript process, press <C-c C-q>.
+   Doing this will also close all inspectors and debugger buffers
+   connected to the process.
+   #+END_SRC
+   
+   Necessary REPL command cheat sheet:
+   
+   | Command    | Behavior                            |
+   |------------+-------------------------------------|
+   | <<return>> | (On links) Open an inspector        |
+   | <C-h m>    | See a list of available keybindings |
+   | <C-c C-o>  | Clear input                         |
+   | <C-c C-q>  | Disconnect from JS process          |
+
+2. _Restart a process_: =M-x-restart-node=
+
+3. _JavaScript Scratch Buffer_: =M-x indium-scratch=
+
+   Use <M-x indium-scratch> to open a scratch buffer for JS evaluation
+
 ** DONE Put custom keybindings in Org-Mode into Custom Keybindings section
