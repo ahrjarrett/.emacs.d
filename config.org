@@ -171,14 +171,19 @@ Right now these are just the default settings, minus disabling lispy and paredit
     :mode (("\\.sml\\'" . sml-mode)))
 #+END_SRC
 
-Reason Mode on GitHub
+[[https://github.com/reasonml-editor/reason-mode][Reason Mode on GitHub]]
 #+BEGIN_SRC emacs-lisp
   (use-package reason-mode
     :ensure t
     :mode ("\\.rei?'" . reason-mode))
 #+END_SRC
 
-
+** Elm
+#+BEGIN_SRC emacs-lisp
+  (use-package elm-mode
+    :mode ("\\.elm\\'" . elm-mode)
+    :init (setq elm-format-on-save t))
+#+END_SRC
 ** Web
 *** JS2 Mode
 [[https://elpa.gnu.org/packages/js2-mode.html][js2-mode on ELPA]]
@@ -189,6 +194,7 @@ Reason Mode on GitHub
     :interpreter ("node" . js2-mode)
     :config
     (setq-default js2-strict-missing-semi-warning nil)
+    (setq-default js2-strict-trailing-comma-warning nil)
     (add-hook 'js2-mode-hook (lambda () (setq js2-basic-offset 2))))
 #+END_SRC
 *** React/JSX
@@ -363,6 +369,15 @@ This occur-mode hook allows me to hit =C-z= in a Magit buffer to turn on/off Evi
                 (kbd "C-u")     'evil-scroll-up)))
 #+END_SRC
 
+*** Evil-Surround
+#+BEGIN_SRC emacs-lisp
+  (use-package evil-surround
+    :ensure t
+    :config
+    (global-evil-surround-mode 1))
+
+#+END_SRC
+
 ** Which-Key
 #+BEGIN_SRC emacs-lisp
   (use-package which-key
@@ -427,6 +442,7 @@ This occur-mode hook allows me to hit =C-z= in a Magit buffer to turn on/off Evi
     :ensure t
     :config
     (projectile-global-mode)
+    (add-to-list 'projectile-globally-ignored-directories "node_modules")
     ;; use ivy for pattern matching and completion
     (setq projectile-completion-system 'ivy))
 #+END_SRC

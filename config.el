@@ -110,12 +110,21 @@
   :ensure t
   :mode (("\\.sml\\'" . sml-mode)))
 
+(use-package reason-mode
+  :ensure t
+  :mode ("\\.rei?'" . reason-mode))
+
+(use-package elm-mode
+  :mode ("\\.elm\\'" . elm-mode)
+  :init (setq elm-format-on-save t))
+
 (use-package js2-mode
   :ensure t
   :mode (("\\.js$" . js2-mode)) ;; makes sure we don't use for jsx files, too
   :interpreter ("node" . js2-mode)
   :config
   (setq-default js2-strict-missing-semi-warning nil)
+  (setq-default js2-strict-trailing-comma-warning nil)
   (add-hook 'js2-mode-hook (lambda () (setq js2-basic-offset 2))))
 
 (use-package rjsx-mode
@@ -221,6 +230,11 @@
               (kbd "C-d")     'evil-scroll-down
               (kbd "C-u")     'evil-scroll-up)))
 
+(use-package evil-surround
+  :ensure t
+  :config
+  (global-evil-surround-mode 1))
+
 (use-package which-key
   :ensure t
   :config
@@ -264,6 +278,7 @@
   :ensure t
   :config
   (projectile-global-mode)
+  (add-to-list 'projectile-globally-ignored-directories "node_modules")
   ;; use ivy for pattern matching and completion
   (setq projectile-completion-system 'ivy))
 
