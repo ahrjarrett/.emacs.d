@@ -1,3 +1,4 @@
+
 ;; Set frame size on startup:
 (add-to-list 'default-frame-alist '(height . 56))
 (add-to-list 'default-frame-alist '(width . 177))
@@ -5,10 +6,10 @@
 (setq gc-cons-threshold 20000000)
 
 ;; set font
-(add-to-list 'default-frame-alist '(font . "mononoki 14"))
-(set-face-attribute 'default t :font "mononoki 14")
-(set-frame-font "mononoki 14" nil t)
-(set-face-attribute 'default nil :height 140)
+;;(add-to-list 'default-frame-alist '(font . "mononoki 14"))
+;;(set-face-attribute 'default t :font "mononoki 14")
+;;(set-frame-font "mononoki 14" nil t)
+;;(set-face-attribute 'default nil :height 140)
 
 ;; get rid of Emacs GUI shit
 (menu-bar-mode -1)
@@ -39,10 +40,10 @@
 (defun load-directory (dir)
   (let ((load-it (lambda (f)
                   (load-file (concat (file-name-as-directory dir) f)))))
-
+   
       (mapc load-it (directory-files dir nil "\\.el$"))))
 
-;; add =vendor= to default directory
+ ;;add =vendor= to default directory
 (load-directory "~/.emacs.d/vendor/")
 
 (setq user-full-name "Andrew Jarrett"

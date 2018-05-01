@@ -19,9 +19,9 @@ Garbage collect at 20MG instead of 0.76MB to speed up some operations:
 ** Interface Customization
 #+BEGIN_SRC emacs-lisp
   ;; set font
-  (add-to-list 'default-frame-alist '(font . "mononoki 14"))
-  (set-face-attribute 'default t :font "mononoki 14")
-  (set-frame-font "mononoki 14" nil t)
+  (add-to-list 'default-frame-alist '(font . "Fira Code Retina"))
+  (set-face-attribute 'default t :font "Fira Code Retina")
+  (set-frame-font "Fira Code Retina" nil t)
   (set-face-attribute 'default nil :height 140)
 
   ;; get rid of Emacs GUI shit
@@ -64,7 +64,7 @@ Consider moving this into [[file:init.el][init.el]]?
      
         (mapc load-it (directory-files dir nil "\\.el$"))))
 
-  ;; add =vendor= to default directory
+   ;;add =vendor= to default directory
   (load-directory "~/.emacs.d/vendor/")
 
 #+END_SRC
