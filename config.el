@@ -60,7 +60,7 @@
 (put 'dired-find-alternate-file 'disabled nil)
 
 ;; display “lambda” as “λ”
-(global-prettify-symbols-mode 1)
+;; (global-prettify-symbols-mode 1)
 
 (use-package quoted-scratch
   :load-path "~/.emacs.d/quoted-scratch/"
@@ -159,6 +159,14 @@
 ;;  (setq prettier-js-args
 ;;        '("--trailing-comma" "all"
 ;;          "--single-quote" "true")))
+
+(use-package markdown-mode
+  :ensure t
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :init (setq markdown-command "multimarkdown"))
 
 (setq org-ellipsis "  ⋱ ")
 (setq org-startup-indented t)

@@ -98,10 +98,11 @@ Consider moving this into [[file:init.el][init.el]]?
 *** Emacs Lisp
 #+BEGIN_SRC emacs-lisp
   ;; display “lambda” as “λ”
-  (global-prettify-symbols-mode 1)
+  ;; (global-prettify-symbols-mode 1)
 #+END_SRC
 **** Scratch
 The [[https://github.com/narendraj9/quoted-scratch][quoted scratch]] package isn't on elpa/melpa, so you've gotta download and load it manually.
+
 #+BEGIN_SRC emacs-lisp
   (use-package quoted-scratch
     :load-path "~/.emacs.d/quoted-scratch/"
@@ -252,6 +253,19 @@ DONE Once you get web-mode working, uncomment the line that adds a hook for pret
 ;;  (setq prettier-js-args
 ;;        '("--trailing-comma" "all"
 ;;          "--single-quote" "true")))
+#+END_SRC
+** Markdown
+
+[[https://jblevins.org/projects/markdown-mode/][Markdown Mode Docs]]
+#+BEGIN_SRC emacs-lisp
+  (use-package markdown-mode
+    :ensure t
+    :commands (markdown-mode gfm-mode)
+    :mode (("README\\.md\\'" . gfm-mode)
+           ("\\.md\\'" . markdown-mode)
+           ("\\.markdown\\'" . markdown-mode))
+    :init (setq markdown-command "multimarkdown"))
+
 #+END_SRC
 
 * Org-Mode
