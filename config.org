@@ -22,36 +22,36 @@ Garbage collect at 20MG instead of 0.76MB to speed up some operations:
   (add-to-list 'default-frame-alist '(font . "Fira Code Retina"))
   (set-face-attribute 'default t :font "Fira Code Retina")
 
-  (when (window-system)
-    (set-frame-font "Fira Code Retina"))
-  (let ((alist '((33 . ".\\(?:\\(?:==\\|!!\\)\\|[!=]\\)")
-                 (35 . ".\\(?:###\\|##\\|_(\\|[#(?[_{]\\)")
-                 (36 . ".\\(?:>\\)")
-                 (37 . ".\\(?:\\(?:%%\\)\\|%\\)")
-                 (38 . ".\\(?:\\(?:&&\\)\\|&\\)")
-                 (42 . ".\\(?:\\(?:\\*\\*/\\)\\|\\(?:\\*[*/]\\)\\|[*/>]\\)")
-                 (43 . ".\\(?:\\(?:\\+\\+\\)\\|[+>]\\)")
-                 (45 . ".\\(?:\\(?:-[>-]\\|<<\\|>>\\)\\|[<>}~-]\\)")
-                 (46 . ".\\(?:\\(?:\\.[.<]\\)\\|[.=-]\\)")
-                 (47 . ".\\(?:\\(?:\\*\\*\\|//\\|==\\)\\|[*/=>]\\)")
-                 (48 . ".\\(?:x[a-zA-Z]\\)")
-                 (58 . ".\\(?:::\\|[:=]\\)")
-                 (59 . ".\\(?:;;\\|;\\)")
-                 (60 . ".\\(?:\\(?:!--\\)\\|\\(?:~~\\|->\\|\\$>\\|\\*>\\|\\+>\\|--\\|<[<=-]\\|=[<=>]\\||>\\)\\|[*$+~/<=>|-]\\)")
-                 (61 . ".\\(?:\\(?:/=\\|:=\\|<<\\|=[=>]\\|>>\\)\\|[<=>~]\\)")
-                 (62 . ".\\(?:\\(?:=>\\|>[=>-]\\)\\|[=>-]\\)")
-                 (63 . ".\\(?:\\(\\?\\?\\)\\|[:=?]\\)")
-                 (91 . ".\\(?:]\\)")
-                 (92 . ".\\(?:\\(?:\\\\\\\\\\)\\|\\\\\\)")
-                 (94 . ".\\(?:=\\)")
-                 (119 . ".\\(?:ww\\)")
-                 (123 . ".\\(?:-\\)")
-                 (124 . ".\\(?:\\(?:|[=|]\\)\\|[=>|]\\)")
-                 (126 . ".\\(?:~>\\|~~\\|[>=@~-]\\)"))))
-               
-    (dolist (char-regexp alist)
-      (set-char-table-range composition-function-table (car char-regexp)
-                            `([,(cdr char-regexp) 0 font-shape-gstring]))))
+  ;;(when (window-system)
+  ;;  (set-frame-font "Fira Code Retina"))
+  ;;(let ((alist '((33 . ".\\(?:\\(?:==\\|!!\\)\\|[!=]\\)")
+  ;;               (35 . ".\\(?:###\\|##\\|_(\\|[#(?[_{]\\)")
+  ;;               (36 . ".\\(?:>\\)")
+  ;;               (37 . ".\\(?:\\(?:%%\\)\\|%\\)")
+  ;;               (38 . ".\\(?:\\(?:&&\\)\\|&\\)")
+  ;;               (42 . ".\\(?:\\(?:\\*\\*/\\)\\|\\(?:\\*[*/]\\)\\|[*/>]\\)")
+  ;;               (43 . ".\\(?:\\(?:\\+\\+\\)\\|[+>]\\)")
+  ;;               (45 . ".\\(?:\\(?:-[>-]\\|<<\\|>>\\)\\|[<>}~-]\\)")
+  ;;               (46 . ".\\(?:\\(?:\\.[.<]\\)\\|[.=-]\\)")
+  ;;               (47 . ".\\(?:\\(?:\\*\\*\\|//\\|==\\)\\|[*/=>]\\)")
+  ;;               (48 . ".\\(?:x[a-zA-Z]\\)")
+  ;;               (58 . ".\\(?:::\\|[:=]\\)")
+  ;;               (59 . ".\\(?:;;\\|;\\)")
+  ;;               (60 . ".\\(?:\\(?:!--\\)\\|\\(?:~~\\|->\\|\\$>\\|\\*>\\|\\+>\\|--\\|<[<=-]\\|=[<=>]\\||>\\)\\|[*$+~/<=>|-]\\)")
+  ;;               (61 . ".\\(?:\\(?:/=\\|:=\\|<<\\|=[=>]\\|>>\\)\\|[<=>~]\\)")
+  ;;               (62 . ".\\(?:\\(?:=>\\|>[=>-]\\)\\|[=>-]\\)")
+  ;;               (63 . ".\\(?:\\(\\?\\?\\)\\|[:=?]\\)")
+  ;;               (91 . ".\\(?:]\\)")
+  ;;               (92 . ".\\(?:\\(?:\\\\\\\\\\)\\|\\\\\\)")
+  ;;               (94 . ".\\(?:=\\)")
+  ;;               (119 . ".\\(?:ww\\)")
+  ;;               (123 . ".\\(?:-\\)")
+  ;;               (124 . ".\\(?:\\(?:|[=|]\\)\\|[=>|]\\)")
+  ;;               (126 . ".\\(?:~>\\|~~\\|[>=@~-]\\)"))))
+  ;;             
+  ;;  (dolist (char-regexp alist)
+  ;;    (set-char-table-range composition-function-table (car char-regexp)
+  ;;                          `([,(cdr char-regexp) 0 font-shape-gstring]))))
 
 
   (set-frame-font "Fira Code Retina" nil t)
@@ -209,6 +209,9 @@ Right now these are just the default settings, minus disabling lispy and paredit
 #+BEGIN_SRC emacs-lisp
   (use-package reason-mode
     :ensure t
+    :init
+    (add-hook 'reason-mode-hook (lambda ())
+            (add-hook 'before-save-hook 'refmt-before-save))
     :mode ("\\.rei?'" . reason-mode))
 #+END_SRC
 
@@ -438,11 +441,18 @@ This occur-mode hook allows me to hit =C-z= in a Magit buffer to turn on/off Evi
 #+BEGIN_SRC emacs-lisp
   (use-package ivy
     :ensure t
-    :config
-    (ivy-mode 1))
+    :init
+    ;; This line is necessary to disable ligatures in Ivy
+    ;; (otherwise it crashes)
+    (add-hook 'ivy-mode
+              (lambda ()
+                (setq auto-composition-mode nil)))
 
-  (use-package counsel
-    :ensure t)
+    :config
+    (ivy-mode 1)
+
+    (use-package counsel
+      :ensure t))
 #+END_SRC
 
 ** Try
