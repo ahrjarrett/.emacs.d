@@ -3,6 +3,15 @@
 #+EMAIL: ahrjarrett@gmail.com
 
 * Init
+
+** Utility functions
+#+BEGIN_SRC emacs-lisp
+  (defun load-packages (package-list)
+    (dolist (package package-list)
+      (unless (package-installed-p package)
+        (package-install package))))
+#+END_SRC
+
 ** Frame Defaults
 #+BEGIN_SRC emacs-lisp
   ;; Set frame size on startup:
@@ -395,6 +404,18 @@ Start a sml REPL with =M-x run-sml=. You should now be able to place your cursor
   (eval-after-load "org"
     '(require 'ox-gfm nil t))
 #+END_SRC
+
+** Org-Trello
+
+*Note:* Apparently =org-trello= doesn't always play nice with =use-package=, so for now I'm installing manually. Will have to reinstall using =M-x package-install= on fresh installs of Emacs.
+
+#+BEGIN_SRC emacs-lisp
+  (load-packages '(org-trello))
+  (require 'org-trello)
+  (setq org-trello-files
+    (directory-files "~/Dropbox/org/ownlocal/trello" ".*\.org$"))
+#+END_SRC
+
 
 * All Other Packages
 ** Evil-Mode

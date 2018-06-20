@@ -11,7 +11,6 @@ vendor/
 # temp files
 *.elc
 ac-comphist.dat
-sunshine.key
 
 # auto-gen and -save files
 \#*\#
@@ -20,6 +19,12 @@ custom.el
 /projectile-bookmarks.eld
 projectile.cache
 
-### org-mode auto-gen stuff
+# org-mode auto-gen stuff
 bookmarks
 
+# cookies
+request/
+
+# keys
+sunshine.key
+.trello/*.el

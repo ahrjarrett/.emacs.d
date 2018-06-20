@@ -1,4 +1,3 @@
-
 ;; Set frame size on startup:
 (add-to-list 'default-frame-alist '(height . 56))
 (add-to-list 'default-frame-alist '(width . 177))
@@ -73,7 +72,7 @@
 (defun load-directory (dir)
   (let ((load-it (lambda (f)
                   (load-file (concat (file-name-as-directory dir) f)))))
-   
+
       (mapc load-it (directory-files dir nil "\\.el$"))))
 
  ;;add =vendor= to default directory
@@ -146,6 +145,9 @@
 
 (use-package reason-mode
   :ensure t
+  :init
+  (add-hook 'reason-mode-hook (lambda ())
+          (add-hook 'before-save-hook 'refmt-before-save))
   :mode ("\\.rei?'" . reason-mode))
 
 (use-package elm-mode
