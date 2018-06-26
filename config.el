@@ -1,3 +1,8 @@
+(defun load-packages (package-list)
+  (dolist (package package-list)
+    (unless (package-installed-p package)
+      (package-install package))))
+
 ;; Set frame size on startup:
 (add-to-list 'default-frame-alist '(height . 56))
 (add-to-list 'default-frame-alist '(width . 177))
@@ -51,7 +56,9 @@
 (use-package nord-theme
   :ensure t
   :defer t
-  :init (load-theme 'nord t))
+  ;:init (load-theme 'nord t)
+  )
+
 
 (use-package zenburn-theme
   :ensure t
@@ -62,8 +69,10 @@
   :defer t)
 
 (use-package sublime-themes
-  :ensure t
-  :defer t)
+:ensure t
+:defer t)
+
+(load-theme 'brin t)
 
 (setenv "PATH" (concat "/usr/local/smlnj/bin:" (getenv "PATH")))
 (setq exec-path (cons "/usr/local/smlnj/bin"  exec-path))
@@ -258,6 +267,11 @@
 
 (eval-after-load "org"
   '(require 'ox-gfm nil t))
+
+(load-packages '(org-trello))
+(require 'org-trello)
+(setq org-trello-files
+  (directory-files "~/Dropbox/org/ownlocal/trello" ".*\.org$"))
 
 (use-package evil
    :ensure t

@@ -76,7 +76,9 @@ Garbage collect at 20MG instead of 0.76MB to speed up some operations:
   (use-package nord-theme
     :ensure t
     :defer t
-    :init (load-theme 'nord t))
+    ;:init (load-theme 'nord t)
+    )
+  
 
   (use-package zenburn-theme
     :ensure t
@@ -87,8 +89,10 @@ Garbage collect at 20MG instead of 0.76MB to speed up some operations:
     :defer t)
 
   (use-package sublime-themes
-    :ensure t
-    :defer t)
+  :ensure t
+  :defer t)
+
+  (load-theme 'brin t)
 #+END_SRC
 
 ** PATH
