@@ -1,3 +1,4 @@
+
 (defun load-packages (package-list)
   (dolist (package package-list)
     (unless (package-installed-p package)
@@ -8,6 +9,11 @@
 (add-to-list 'default-frame-alist '(width . 177))
 
 (setq gc-cons-threshold 20000000)
+
+;; get rid of Emacs GUI shit
+(menu-bar-mode -1)
+(scroll-bar-mode -1)
+(tool-bar-mode -1)
 
 ;; set font
 (add-to-list 'default-frame-alist '(font . "Fira Code Retina"))
@@ -48,10 +54,11 @@
 (set-frame-font "Fira Code Retina" nil t)
 (set-face-attribute 'default nil :height 140)
 
-;; get rid of Emacs GUI shit
-(menu-bar-mode -1)
-(scroll-bar-mode -1)
-(tool-bar-mode -1)
+;; font scaling
+(use-package default-text-scale
+  :ensure t
+  :bind ("C-M-=" . default-text-scale-increase)
+  ("C-M--" . default-text-scale-decrease))
 
 (use-package nord-theme
   :ensure t
@@ -81,7 +88,7 @@
 (defun load-directory (dir)
   (let ((load-it (lambda (f)
                   (load-file (concat (file-name-as-directory dir) f)))))
-
+   
       (mapc load-it (directory-files dir nil "\\.el$"))))
 
  ;;add =vendor= to default directory
