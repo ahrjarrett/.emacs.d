@@ -53,7 +53,7 @@ This package allows me to adjust font-size in all buffers, including the mini-bu
     :ensure t
     :defer t
     ;:init (load-theme 'nord t)
-    )
+  )
   
 
   (use-package zenburn-theme
@@ -65,8 +65,8 @@ This package allows me to adjust font-size in all buffers, including the mini-bu
     :defer t)
 
   (use-package sublime-themes
-  :ensure t
-  :defer t)
+    :ensure t
+    :defer t)
 
   (load-theme 'brin t)
 #+END_SRC
