@@ -358,8 +358,11 @@ The latest version of org-mode is manually installed in this directory under [[f
    '(org-directory "~/Dropbox/orgfiles")
    '(org-default-notes-file (concat org-directory "/notes.org")))
 
-  (setq org-agenda-files (list (concat org-directory "/google-calendar.org")
-                               (concat org-directory "/index.org")))
+  (setq org-agenda-files (list "~/Dropbox/org/ownlocal"))
+
+  ;; org-mode agenda config from Home computer, changed for Work 08/01/18
+  ;;(setq org-agenda-files (list (concat org-directory "/google-calendar.org")
+  ;;                             (concat org-directory "/index.org"))))
 #+END_SRC
 
 ** Org-Babel

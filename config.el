@@ -1,4 +1,3 @@
-
 (defun load-packages (package-list)
   (dolist (package package-list)
     (unless (package-installed-p package)
@@ -88,7 +87,7 @@
 (defun load-directory (dir)
   (let ((load-it (lambda (f)
                   (load-file (concat (file-name-as-directory dir) f)))))
-   
+
       (mapc load-it (directory-files dir nil "\\.el$"))))
 
  ;;add =vendor= to default directory
@@ -236,8 +235,11 @@
  '(org-directory "~/Dropbox/orgfiles")
  '(org-default-notes-file (concat org-directory "/notes.org")))
 
-(setq org-agenda-files (list (concat org-directory "/google-calendar.org")
-                             (concat org-directory "/index.org")))
+(setq org-agenda-files (list "~/Dropbox/org/ownlocal"))
+
+;; org-mode agenda config from Home computer, changed for Work 08/01/18
+;;(setq org-agenda-files (list (concat org-directory "/google-calendar.org")
+;;                             (concat org-directory "/index.org"))))
 
 (require 'ob-sml nil 'noerror)
 
