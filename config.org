@@ -34,49 +34,6 @@ Garbage collect at 20MG instead of 0.76MB to speed up some operations:
   (tool-bar-mode -1)
 #+END_SRC
 
-*** Select Font
-#+BEGIN_SRC emacs-lisp
-  ;; set font
-  (add-to-list 'default-frame-alist '(font . "Fira Code Retina"))
-  (set-face-attribute 'default t :font "Fira Code Retina")
-
-  ;;(when (window-system)
-  ;;  (set-frame-font "Fira Code Retina"))
-  ;;(let ((alist '((33 . ".\\(?:\\(?:==\\|!!\\)\\|[!=]\\)")
-  ;;               (35 . ".\\(?:###\\|##\\|_(\\|[#(?[_{]\\)")
-  ;;               (36 . ".\\(?:>\\)")
-  ;;               (37 . ".\\(?:\\(?:%%\\)\\|%\\)")
-  ;;               (38 . ".\\(?:\\(?:&&\\)\\|&\\)")
-  ;;               (42 . ".\\(?:\\(?:\\*\\*/\\)\\|\\(?:\\*[*/]\\)\\|[*/>]\\)")
-  ;;               (43 . ".\\(?:\\(?:\\+\\+\\)\\|[+>]\\)")
-  ;;               (45 . ".\\(?:\\(?:-[>-]\\|<<\\|>>\\)\\|[<>}~-]\\)")
-  ;;               (46 . ".\\(?:\\(?:\\.[.<]\\)\\|[.=-]\\)")
-  ;;               (47 . ".\\(?:\\(?:\\*\\*\\|//\\|==\\)\\|[*/=>]\\)")
-  ;;               (48 . ".\\(?:x[a-zA-Z]\\)")
-  ;;               (58 . ".\\(?:::\\|[:=]\\)")
-  ;;               (59 . ".\\(?:;;\\|;\\)")
-  ;;               (60 . ".\\(?:\\(?:!--\\)\\|\\(?:~~\\|->\\|\\$>\\|\\*>\\|\\+>\\|--\\|<[<=-]\\|=[<=>]\\||>\\)\\|[*$+~/<=>|-]\\)")
-  ;;               (61 . ".\\(?:\\(?:/=\\|:=\\|<<\\|=[=>]\\|>>\\)\\|[<=>~]\\)")
-  ;;               (62 . ".\\(?:\\(?:=>\\|>[=>-]\\)\\|[=>-]\\)")
-  ;;               (63 . ".\\(?:\\(\\?\\?\\)\\|[:=?]\\)")
-  ;;               (91 . ".\\(?:]\\)")
-  ;;               (92 . ".\\(?:\\(?:\\\\\\\\\\)\\|\\\\\\)")
-  ;;               (94 . ".\\(?:=\\)")
-  ;;               (119 . ".\\(?:ww\\)")
-  ;;               (123 . ".\\(?:-\\)")
-  ;;               (124 . ".\\(?:\\(?:|[=|]\\)\\|[=>|]\\)")
-  ;;               (126 . ".\\(?:~>\\|~~\\|[>=@~-]\\)"))))
-  ;;             
-  ;;  (dolist (char-regexp alist)
-  ;;    (set-char-table-range composition-function-table (car char-regexp)
-  ;;                          `([,(cdr char-regexp) 0 font-shape-gstring]))))
-
-
-  (set-frame-font "Fira Code Retina" nil t)
-  (set-face-attribute 'default nil :height 140)
-
-#+END_SRC
-
 *** Font Scaling
 [[https://github.com/purcell/default-text-scale%0A][default-text-scale on GitHub]]
 
@@ -96,7 +53,7 @@ This package allows me to adjust font-size in all buffers, including the mini-bu
     :ensure t
     :defer t
     ;:init (load-theme 'nord t)
-    )
+  )
   
 
   (use-package zenburn-theme
@@ -108,8 +65,8 @@ This package allows me to adjust font-size in all buffers, including the mini-bu
     :defer t)
 
   (use-package sublime-themes
-  :ensure t
-  :defer t)
+    :ensure t
+    :defer t)
 
   (load-theme 'brin t)
 #+END_SRC
