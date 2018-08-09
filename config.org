@@ -48,13 +48,15 @@ This package allows me to adjust font-size in all buffers, including the mini-bu
 #+END_SRC
 
 *** Theme
+
 #+BEGIN_SRC emacs-lisp
   (use-package nord-theme
     :ensure t
     :defer t
     ;:init (load-theme 'nord t)
   )
-  
+
+  ;(load-theme 'brin t)
 
   (use-package zenburn-theme
     :ensure t
@@ -68,7 +70,10 @@ This package allows me to adjust font-size in all buffers, including the mini-bu
     :ensure t
     :defer t)
 
-  (load-theme 'brin t)
+  (use-package spacemacs-theme
+    :ensure t
+    :defer t
+    :init (load-theme 'spacemacs-light))
 #+END_SRC
 
 ** PATH
@@ -528,6 +533,7 @@ This occur-mode hook allows me to hit =C-z= in a Magit buffer to turn on/off Evi
 
 * Miscellaneous
 ** Sunshine
+
 [[https://github.com/aaronbieber/sunshine.el][Sunshine.el on Github]]
 #+BEGIN_SRC emacs-lisp
   (use-package sunshine
@@ -544,6 +550,7 @@ This occur-mode hook allows me to hit =C-z= in a Magit buffer to turn on/off Evi
     (setq sunshine-location "Denver, CO, USA")
     (setq sunshine-show-icons t))
 #+END_SRC
+
 * Todo
 ** TODO Install & Configure CIDER (file under LISPs -> Clojure)
 ** TODO Paredit [disabled]
