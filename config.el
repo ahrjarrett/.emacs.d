@@ -185,6 +185,10 @@
          ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
 
+(setq eshell-prompt-function
+  (lambda ()
+    "$ "))
+
 (setq org-ellipsis "  ⋱ ")
 (setq org-startup-indented t)
 

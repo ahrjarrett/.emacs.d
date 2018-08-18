@@ -309,7 +309,8 @@ DONE Once you get web-mode working, uncomment the line that adds a hook for pret
 #+BEGIN_SRC emacs-lisp
   (setq eshell-prompt-function
     (lambda ()
-      "$ "))
+      (concat (format-time-string "%Y-%m-%d %H:%M" (current-time))
+        (if (= (user-uid) 0) " # " " $ "))))
 #+END_SRC
 
 
