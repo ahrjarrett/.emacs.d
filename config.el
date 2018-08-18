@@ -1,3 +1,4 @@
+
 (defun load-packages (package-list)
   (dolist (package package-list)
     (unless (package-installed-p package)
@@ -26,6 +27,7 @@
   ;:init (load-theme 'nord t)
 )
 
+;(load-theme 'brin t)
 
 (use-package zenburn-theme
   :ensure t
@@ -39,7 +41,10 @@
   :ensure t
   :defer t)
 
-(load-theme 'brin t)
+(use-package spacemacs-theme
+  :ensure t
+  :defer t
+  :init (load-theme 'spacemacs-light))
 
 (setenv "PATH" (concat "/usr/local/smlnj/bin:" (getenv "PATH")))
 (setq exec-path (cons "/usr/local/smlnj/bin"  exec-path))
@@ -48,7 +53,7 @@
 (defun load-directory (dir)
   (let ((load-it (lambda (f)
                   (load-file (concat (file-name-as-directory dir) f)))))
-
+   
       (mapc load-it (directory-files dir nil "\\.el$"))))
 
  ;;add =vendor= to default directory

@@ -298,6 +298,21 @@ DONE Once you get web-mode working, uncomment the line that adds a hook for pret
 
 #+END_SRC
 
+* Eshell
+
+** Prompt
+[[https://www.emacswiki.org/emacs/EshellPrompt][Prompt Docs here]]
+
+*** TODO Remove pathname /conditionally/, depending on width of buffer
+*Here:* Remove pathname from prompt so I can actually read wtf I'm typing.
+
+#+BEGIN_SRC emacs-lisp
+  (setq eshell-prompt-function
+    (lambda ()
+      "$ "))
+#+END_SRC
+
+
 * Org-Mode
 ** Basic Org Config
 
