@@ -432,6 +432,8 @@ Start a sml REPL with =M-x run-sml=. You should now be able to place your cursor
      (evil-mode 1))
 #+END_SRC
 
+*** TODO Fix =C-u= keybinding as it conflicts with native Emacs binding for modifier
+
 This occur-mode hook allows me to hit =C-z= in a Magit buffer to turn on/off Evil bindings:
 #+BEGIN_SRC emacs-lisp
   (add-hook 'occur-mode-hook

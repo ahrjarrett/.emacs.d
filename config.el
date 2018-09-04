@@ -1,4 +1,3 @@
-
 (defun load-packages (package-list)
   (dolist (package package-list)
     (unless (package-installed-p package)
@@ -53,7 +52,7 @@
 (defun load-directory (dir)
   (let ((load-it (lambda (f)
                   (load-file (concat (file-name-as-directory dir) f)))))
-   
+
       (mapc load-it (directory-files dir nil "\\.el$"))))
 
  ;;add =vendor= to default directory
@@ -187,7 +186,8 @@
 
 (setq eshell-prompt-function
   (lambda ()
-    "$ "))
+    (concat (format-time-string "%Y-%m-%d %H:%M" (current-time))
+      (if (= (user-uid) 0) " # " " $ "))))
 
 (setq org-ellipsis "  ⋱ ")
 (setq org-startup-indented t)
