@@ -35,7 +35,7 @@ Garbage collect at 20MG instead of 0.76MB to speed up some operations:
 #+END_SRC
 
 *** Font Scaling
-[[https://github.com/purcell/default-text-scale%0A][default-text-scale on GitHub]]
+[[https://github.com/purcell/default-text-scale][default-text-scale on GitHub]]
 
 This package allows me to adjust font-size in all buffers, including the mini-buffer (finally)
 
@@ -322,6 +322,7 @@ The latest version of org-mode is manually installed in this directory under [[f
 #+BEGIN_SRC emacs-lisp
   (setq org-ellipsis "  ⋱ ")
   (setq org-startup-indented t)
+  (setq org-table-convert-region-max-lines 3000)
 
   (use-package htmlize
     :ensure t)
