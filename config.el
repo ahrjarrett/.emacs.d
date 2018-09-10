@@ -185,9 +185,10 @@
          ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
 
-(setq eshell-prompt-function
-  (lambda ()
-    "$ "))
+;(setq eshell-prompt-function
+;  (lambda ()
+;    (concat (format-time-string "%Y-%m-%d %H:%M" (current-time))
+;      (if (= (user-uid) 0) " # " " $ "))))
 
 (setq org-ellipsis "  ⋱ ")
 (setq org-startup-indented t)
