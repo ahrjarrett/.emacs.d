@@ -33,7 +33,6 @@ Garbage collect at 20MG instead of 0.76MB to speed up some operations:
   (scroll-bar-mode -1)
   (tool-bar-mode -1)
 #+END_SRC
-
 *** Font Scaling
 [[https://github.com/purcell/default-text-scale][default-text-scale on GitHub]]
 
@@ -308,10 +307,10 @@ DONE Once you get web-mode working, uncomment the line that adds a hook for pret
 *Here:* Remove pathname from prompt so I can actually read wtf I'm typing.
 
 #+BEGIN_SRC emacs-lisp
-  (setq eshell-prompt-function
-    (lambda ()
-      (concat (format-time-string "%Y-%m-%d %H:%M" (current-time))
-        (if (= (user-uid) 0) " # " " $ "))))
+  ;(setq eshell-prompt-function
+  ;  (lambda ()
+  ;    (concat (format-time-string "%Y-%m-%d %H:%M" (current-time))
+  ;      (if (= (user-uid) 0) " # " " $ "))))
 #+END_SRC
 
 
