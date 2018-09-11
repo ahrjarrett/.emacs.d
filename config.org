@@ -52,11 +52,7 @@ This package allows me to adjust font-size in all buffers, including the mini-bu
 #+BEGIN_SRC emacs-lisp
   (use-package nord-theme
     :ensure t
-    :defer t
-    ;:init (load-theme 'nord t)
-  )
-
-  ;(load-theme 'brin t)
+    :defer t)
 
   (use-package zenburn-theme
     :ensure t
@@ -74,6 +70,11 @@ This package allows me to adjust font-size in all buffers, including the mini-bu
     :ensure t
     :defer t
     :init (load-theme 'spacemacs-light))
+#+END_SRC
+
+*** Highlight Line Mode
+#+BEGIN_SRC emacs-lisp
+  (global-hl-line-mode)
 #+END_SRC
 
 ** PATH

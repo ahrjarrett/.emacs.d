@@ -41,9 +41,9 @@
   :defer t)
 
 (use-package spacemacs-theme
-  :ensure t
-  :defer t
   :init (load-theme 'spacemacs-light))
+
+(global-hl-line-mode)
 
 (setenv "PATH" (concat "/usr/local/smlnj/bin:" (getenv "PATH")))
 (setq exec-path (cons "/usr/local/smlnj/bin"  exec-path))
@@ -191,6 +191,7 @@
 
 (setq org-ellipsis "  ⋱ ")
 (setq org-startup-indented t)
+(setq org-table-convert-region-max-lines 3000)
 
 (use-package htmlize
   :ensure t)
