@@ -192,6 +192,7 @@
 
 (setq org-ellipsis "  ⋱ ")
 (setq org-startup-indented t)
+(setq org-table-convert-region-max-lines 3000)
 
 (use-package htmlize
   :ensure t)
