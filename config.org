@@ -215,6 +215,7 @@ Right now these are just the default settings, minus disabling lispy and paredit
     :mode ("\\.elm\\'" . elm-mode)
     :init (setq elm-format-on-save t))
 #+END_SRC
+
 ** Web
 *** JS2 Mode
 [[https://elpa.gnu.org/packages/js2-mode.html][js2-mode on ELPA]]
@@ -228,6 +229,7 @@ Right now these are just the default settings, minus disabling lispy and paredit
     (setq-default js2-strict-trailing-comma-warning nil)
     (add-hook 'js2-mode-hook (lambda () (setq js2-basic-offset 2))))
 #+END_SRC
+
 *** React/JSX
 
 [[https://github.com/felipeochoa/rjsx-mode][rjsx-mode on GitHub]]
@@ -271,6 +273,7 @@ TODO really dig into react, make sure you can use arrow fn in component attribut
     )
 
 #+END_SRC
+
 *** Prettier JS
 DONE Once you get web-mode working, uncomment the line that adds a hook for prettier.
 
@@ -284,6 +287,7 @@ DONE Once you get web-mode working, uncomment the line that adds a hook for pret
 ;;        '("--trailing-comma" "all"
 ;;          "--single-quote" "true")))
 #+END_SRC
+
 ** Markdown
 
 [[https://jblevins.org/projects/markdown-mode/][Markdown Mode Docs]]
