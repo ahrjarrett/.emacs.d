@@ -28,3 +28,5 @@ request/
 # keys
 sunshine.key
 .trello/*.el
+# sql
+sql.config

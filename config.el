@@ -1,8 +1,18 @@
-
 (defun load-packages (package-list)
   (dolist (package package-list)
     (unless (package-installed-p package)
       (package-install package))))
+
+(defun echo-file-contents (file-path)
+  "Return FILE-PATH's contents."
+  (with-temp-buffer
+    (insert-file-contents file-path)
+    (buffer-string)))
+
+(split-string
+   (echo-file-contents
+    (expand-file-name "ssh.config" user-emacs-directory)))
+;; ("Hello" "World")
 
 ;; Set frame size on startup:
 (add-to-list 'default-frame-alist '(height . 56))
@@ -23,11 +33,7 @@
 
 (use-package nord-theme
   :ensure t
-  :defer t
-  ;:init (load-theme 'nord t)
-)
-
-;(load-theme 'brin t)
+  :defer t)
 
 (use-package zenburn-theme
   :ensure t
@@ -42,6 +48,8 @@
   :defer t)
 
 (use-package spacemacs-theme
+  :ensure t
+  :defer t
   :init (load-theme 'spacemacs-light))
 
 (global-hl-line-mode)
@@ -53,7 +61,7 @@
 (defun load-directory (dir)
   (let ((load-it (lambda (f)
                   (load-file (concat (file-name-as-directory dir) f)))))
-   
+
       (mapc load-it (directory-files dir nil "\\.el$"))))
 
  ;;add =vendor= to default directory
@@ -341,11 +349,6 @@
   :ensure t
   :commands sunshine-forecast
   :config
-  (defun echo-file-contents (file-path)
-    "Return FILE-PATH's contents."
-    (with-temp-buffer
-      (insert-file-contents file-path)
-      (buffer-string)))
   (setq sunshine-appid (echo-file-contents
                         (expand-file-name "sunshine.key" user-emacs-directory)))
   (setq sunshine-location "Denver, CO, USA")

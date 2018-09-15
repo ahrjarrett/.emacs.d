@@ -2,15 +2,38 @@
 #+AUTHOR: Andrew Jarrett
 #+EMAIL: ahrjarrett@gmail.com
 
-* Init
+* Utility functions
 
-** Utility functions
+** =load-packages=
+To install packages that don't play nice with =use-package=
 #+BEGIN_SRC emacs-lisp
   (defun load-packages (package-list)
     (dolist (package package-list)
       (unless (package-installed-p package)
         (package-install package))))
 #+END_SRC
+
+** =echo-file-contents=
+Read file contents
+#+BEGIN_SRC emacs-lisp
+  (defun echo-file-contents (file-path)
+    "Return FILE-PATH's contents."
+    (with-temp-buffer
+      (insert-file-contents file-path)
+      (buffer-string)))
+#+END_SRC
+
+Example use case, where =ssh.config= contains the phrase "Hello World":
+#+BEGIN_SRC emacs-lisp
+  (split-string
+   (echo-file-contents
+    (expand-file-name "ssh.config" user-emacs-directory)))
+;; ("Hello" "World")
+#+END_SRC
+
+
+* Init
+
 
 ** Frame Defaults
 #+BEGIN_SRC emacs-lisp
@@ -563,11 +586,6 @@ This occur-mode hook allows me to hit =C-z= in a Magit buffer to turn on/off Evi
     :ensure t
     :commands sunshine-forecast
     :config
-    (defun echo-file-contents (file-path)
-      "Return FILE-PATH's contents."
-      (with-temp-buffer
-        (insert-file-contents file-path)
-        (buffer-string)))
     (setq sunshine-appid (echo-file-contents
                           (expand-file-name "sunshine.key" user-emacs-directory)))
     (setq sunshine-location "Denver, CO, USA")
