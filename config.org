@@ -142,7 +142,6 @@ Consider moving this into [[file:init.el][init.el]]?
   ;; allow me to open a file/dir in dired w/o creating another buffer by hitting `a`
   (put 'dired-find-alternate-file 'disabled nil)
 #+END_SRC
-
 * Language & Environment Support
 ** LISPs
 *** Emacs Lisp
@@ -215,6 +214,8 @@ Right now these are just the default settings, minus disabling lispy and paredit
 #+END_SRC
 
 ** ML
+
+*** SML
 [[https://elpa.gnu.org/packages/sml-mode.html][SML Mode on ELPA]]
 #+BEGIN_SRC emacs-lisp
   (use-package sml-mode
@@ -222,6 +223,7 @@ Right now these are just the default settings, minus disabling lispy and paredit
     :mode (("\\.sml\\'" . sml-mode)))
 #+END_SRC
 
+*** ReasonML
 [[https://github.com/reasonml-editor/reason-mode][Reason Mode on GitHub]]
 #+BEGIN_SRC emacs-lisp
   (use-package reason-mode
@@ -231,6 +233,16 @@ Right now these are just the default settings, minus disabling lispy and paredit
             (add-hook 'before-save-hook 'refmt-before-save))
     :mode ("\\.rei?'" . reason-mode))
 #+END_SRC
+
+*** OCaml
+[[https://github.com/ocaml/tuareg][Tuareg Mode on GitHub]]
+
+TODO: Add regex for types of file extensions in =:mode=, e.g. =:mode ("\\.ml[ily]?$" . tuareg-mode)=
+
+#+BEGIN_SRC emacs-lisp
+  (use-package tuareg
+    :ensure t)
+#+End_SRC
 
 ** Elm
 #+BEGIN_SRC emacs-lisp
@@ -324,6 +336,7 @@ DONE Once you get web-mode working, uncomment the line that adds a hook for pret
     :init (setq markdown-command "multimarkdown"))
 
 #+END_SRC
+
 
 * Eshell
 
