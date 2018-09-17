@@ -24,7 +24,7 @@ Read file contents
 #+END_SRC
 
 Example use case, where =ssh.config= contains the phrase "Hello World":
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC
   (split-string
    (echo-file-contents
     (expand-file-name "ssh.config" user-emacs-directory)))

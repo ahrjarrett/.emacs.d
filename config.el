@@ -1,3 +1,4 @@
+
 (defun load-packages (package-list)
   (dolist (package package-list)
     (unless (package-installed-p package)
@@ -8,11 +9,6 @@
   (with-temp-buffer
     (insert-file-contents file-path)
     (buffer-string)))
-
-(split-string
-   (echo-file-contents
-    (expand-file-name "ssh.config" user-emacs-directory)))
-;; ("Hello" "World")
 
 ;; Set frame size on startup:
 (add-to-list 'default-frame-alist '(height . 56))
@@ -61,7 +57,7 @@
 (defun load-directory (dir)
   (let ((load-it (lambda (f)
                   (load-file (concat (file-name-as-directory dir) f)))))
-
+   
       (mapc load-it (directory-files dir nil "\\.el$"))))
 
  ;;add =vendor= to default directory
