@@ -124,6 +124,13 @@
 (use-package cider
   :ensure t)
 
+(add-hook 'python-mode-hook
+          (lambda ()
+            (setq-default indent-tabs-mode t)
+            (setq-default tab-width 2)
+            (setq-default py-indent-tabs-mode t)
+            (add-to-list 'write-file-functions 'delete-trailing-whitespace)))
+
 (use-package sml-mode
   :ensure t
   :mode (("\\.sml\\'" . sml-mode)))
@@ -134,6 +141,9 @@
   (add-hook 'reason-mode-hook (lambda ())
           (add-hook 'before-save-hook 'refmt-before-save))
   :mode ("\\.rei?'" . reason-mode))
+
+(use-package tuareg
+  :ensure t)
 
 (use-package elm-mode
   :mode ("\\.elm\\'" . elm-mode)

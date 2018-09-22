@@ -94,9 +94,12 @@ This package allows me to adjust font-size in all buffers, including the mini-bu
     :init (load-theme 'spacemacs-light))
 #+END_SRC
 
-*** Highlight Line Mode
+*** Highlighting
 #+BEGIN_SRC emacs-lisp
+  ;; highlight line at point
   (global-hl-line-mode)
+  ;; highlight opposite paren
+  (show-paren-mode t)
 #+END_SRC
 
 ** PATH
@@ -211,6 +214,18 @@ Right now these are just the default settings, minus disabling lispy and paredit
 #+BEGIN_SRC emacs-lisp
   (use-package cider
     :ensure t)
+#+END_SRC
+
+** Python
+
+Use tabs, set tab width to 2, delete whitespace on save:
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'python-mode-hook
+            (lambda ()
+              (setq-default indent-tabs-mode t)
+              (setq-default tab-width 2)
+              (setq-default py-indent-tabs-mode t)
+              (add-to-list 'write-file-functions 'delete-trailing-whitespace)))
 #+END_SRC
 
 ** ML
@@ -405,6 +420,7 @@ Start a sml REPL with =M-x run-sml=. You should now be able to place your cursor
    'org-babel-load-languages
    '((sml . t)))
 #+END_SRC
+
 
 ** Org Autocomplete
 #+BEGIN_SRC emacs-lisp
