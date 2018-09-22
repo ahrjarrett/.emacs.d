@@ -1,6 +1,8 @@
 Entry: <2018-03-10 Sat>
 
-* NOTES FROM THE EMACS LISP MANUAL
+NOTES FROM THE EMACS LISP MANUAL
+
+* Types
 
 On types in general:
 

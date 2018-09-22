@@ -41,7 +41,6 @@ Example use case, where =ssh.config= contains the phrase "Hello World":
 
 * Init
 
-
 ** Frame Defaults
 #+BEGIN_SRC emacs-lisp
   ;; Set frame size on startup:
@@ -63,7 +62,15 @@ Garbage collect at 20MG instead of 0.76MB to speed up some operations:
   (scroll-bar-mode -1)
   (tool-bar-mode -1)
 #+END_SRC
-*** Font Scaling
+*** Typeface / Font
+**** Default typeface
+
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'default-frame-alist '(font . "Fira Code Medium" ))
+  (set-face-attribute 'default t :font "Fira Code Medium" )
+#+END_SRC
+
+**** Font Scaling
 [[https://github.com/purcell/default-text-scale][default-text-scale on GitHub]]
 
 This package allows me to adjust font-size in all buffers, including the mini-buffer (finally)
@@ -89,7 +96,8 @@ This package allows me to adjust font-size in all buffers, including the mini-bu
 
   (use-package leuven-theme
     :ensure t
-    :defer t)
+    :defer t
+    :init (load-theme 'leuven))
 
   (use-package sublime-themes
     :ensure t
@@ -98,7 +106,9 @@ This package allows me to adjust font-size in all buffers, including the mini-bu
   (use-package spacemacs-theme
     :ensure t
     :defer t
-    :init (load-theme 'spacemacs-light))
+    :init ;;(load-theme 'spacemacs-light)
+   )
+
 #+END_SRC
 
 *** Highlighting
@@ -108,6 +118,7 @@ This package allows me to adjust font-size in all buffers, including the mini-bu
   ;; highlight opposite paren
   (show-paren-mode t)
 #+END_SRC
+
 
 ** PATH
 
@@ -152,6 +163,8 @@ Consider moving this into [[file:init.el][init.el]]?
   ;; allow me to open a file/dir in dired w/o creating another buffer by hitting `a`
   (put 'dired-find-alternate-file 'disabled nil)
 #+END_SRC
+
+
 * Language & Environment Support
 ** LISPs
 *** Emacs Lisp
@@ -382,9 +395,12 @@ DONE Once you get web-mode working, uncomment the line that adds a hook for pret
 The latest version of org-mode is manually installed in this directory under [[file:org-mode/][org-mode/]]. This is to provide more extensive language support for org-babel.
 
 #+BEGIN_SRC emacs-lisp
-  (setq org-ellipsis "  ⋱ ")
+  (setq org-ellipsis "  ▼")
   (setq org-startup-indented t)
   (setq org-table-convert-region-max-lines 3000)
+
+  ;; turn on visual line mode automatically for .org files
+  (add-hook 'org-mode-hook #'turn-on-visual-line-mode)
 
   (use-package htmlize
     :ensure t)
@@ -422,15 +438,27 @@ Start a sml REPL with =M-x run-sml=. You should now be able to place your cursor
 
 *** Kick it all off
 
+- =org-babel-do-load-languages= tells org-mode which languages it can evaluate in source code blocks. Add additional languages as =cons= cells, for example: =(ocaml . t )=.
+- =ocp-indent= tells org-mode how to export OCaml results to other formats, for example html. For this to work, make sure you've installed it with:
+
+  =$ opam install ocp-indent=
+  
+  And that you have the correct load-path. After it installs, opam will tell you where it is.
+
 #+BEGIN_SRC emacs-lisp
   (org-babel-do-load-languages
    'org-babel-load-languages
-   '((sml . t)))
+   '((sml . t)
+     (ocaml . t)))
+
+  ;; after installing ocp-indent:
+  ;;(add-to-list 'load-path "/Users/aj/.opam/default/share/emacs/site-lisp"
+  ;;             (require 'ocp-indent))
 #+END_SRC
 
-** Exporting
+*** Exporting
 
-*** Defaults
+**** Defaults
 
 #+BEGIN_SRC emacs-lisp
   ;; removes annoying numbering from headers when exporting to HTML.
@@ -440,7 +468,7 @@ Start a sml REPL with =M-x run-sml=. You should now be able to place your cursor
   (setq org-export-with-section-numbers nil)
 #+END_SRC
 
-*** GitHub Markdown Export
+**** GitHub Markdown Export
 
 [[https://github.com/larstvei/ox-gfm][ox-gfm on GitHub]]
 [[https://melpa.org/#/ox-gfm][ox-gfm on MELPA]]
@@ -454,7 +482,10 @@ Start a sml REPL with =M-x run-sml=. You should now be able to place your cursor
 #+END_SRC
 
 
+
 ** Org Autocomplete
+Disabled <2018-09-22 Sat> because of minor annoyances while writing reports or prose in org-mode.
+
 #+BEGIN_SRC emacs-lisp
   (use-package org-ac
     :disabled

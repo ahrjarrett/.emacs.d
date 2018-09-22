@@ -21,6 +21,9 @@
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 
+(add-to-list 'default-frame-alist '(font . "Fira Code Medium" ))
+(set-face-attribute 'default t :font "Fira Code Medium" )
+
 ;; font scaling
 (use-package default-text-scale
   :ensure t
@@ -37,7 +40,8 @@
 
 (use-package leuven-theme
   :ensure t
-  :defer t)
+  :defer t
+  :init (load-theme 'leuven))
 
 (use-package sublime-themes
   :ensure t
@@ -46,7 +50,8 @@
 (use-package spacemacs-theme
   :ensure t
   :defer t
-  :init (load-theme 'spacemacs-light))
+  :init ;;(load-theme 'spacemacs-light)
+ )
 
 ;; highlight line at point
 (global-hl-line-mode)
@@ -207,9 +212,12 @@
 ;    (concat (format-time-string "%Y-%m-%d %H:%M" (current-time))
 ;      (if (= (user-uid) 0) " # " " $ "))))
 
-(setq org-ellipsis "  ⋱ ")
+(setq org-ellipsis "  ▼")
 (setq org-startup-indented t)
 (setq org-table-convert-region-max-lines 3000)
+
+;; turn on visual line mode automatically for .org files
+(add-hook 'org-mode-hook #'turn-on-visual-line-mode)
 
 (use-package htmlize
   :ensure t)
@@ -234,9 +242,27 @@
 
 (org-babel-do-load-languages
  'org-babel-load-languages
- '((sml . t)))
+ '((sml . t)
+   (ocaml . t)))
+
+;; after installing ocp-indent:
+;;(add-to-list 'load-path "/Users/aj/.opam/default/share/emacs/site-lisp"
+;;             (require 'ocp-indent))
+
+;; removes annoying numbering from headers when exporting to HTML.
+;; the equivalent of putting:
+;;     #+OPTIONS: num:nil 
+;; at the top of every org file:
+(setq org-export-with-section-numbers nil)
+
+(use-package ox-gfm
+  :ensure t)
+
+(eval-after-load "org"
+  '(require 'ox-gfm nil t))
 
 (use-package org-ac
+  :disabled
   :ensure t
   ;; why is this require in init necessary? is it?
   :init (progn
@@ -259,12 +285,6 @@
              "* Note %? %^g \n%i\n%T")
         ("t" "Todo Item" entry (file+headline    (concat org-directory "/todo.org") "Todo Items")
              "* TODO %?\n%T" :prepend t)))
-
-(use-package ox-gfm
-  :ensure t)
-
-(eval-after-load "org"
-  '(require 'ox-gfm nil t))
 
 (load-packages '(org-trello))
 (require 'org-trello)
