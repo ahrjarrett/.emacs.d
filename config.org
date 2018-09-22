@@ -599,8 +599,11 @@ This occur-mode hook allows me to hit =C-z= in a Magit buffer to turn on/off Evi
 
 *** Git Gutter
 [[https://github.com/syohex/emacs-git-gutter][Git Gutter's Github Repo]]
+Disabled: <2018-09-22 Sat>
+
 #+BEGIN_SRC emacs-lisp
   (use-package git-gutter
+    :disabled
     :ensure t
     :init
     (global-git-gutter-mode +1))
