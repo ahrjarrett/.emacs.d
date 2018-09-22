@@ -18,6 +18,7 @@ any Lisp objects.
 
    The following diagram shows the relationship between these types:
 
+   #+BEGIN_SRC 
                _____________________________________________
               |                                             |
               |          Sequence                           |
@@ -34,6 +35,8 @@ any Lisp objects.
               |          | |____________| |_____________| | |
               |          |________________________________| |
               |_____________________________________________|
+   
+   #+END_SRC
 
 
 ** 7 Hash Tables

@@ -428,10 +428,36 @@ Start a sml REPL with =M-x run-sml=. You should now be able to place your cursor
    '((sml . t)))
 #+END_SRC
 
+** Exporting
+
+*** Defaults
+
+#+BEGIN_SRC emacs-lisp
+  ;; removes annoying numbering from headers when exporting to HTML.
+  ;; the equivalent of putting:
+  ;;     #+OPTIONS: num:nil 
+  ;; at the top of every org file:
+  (setq org-export-with-section-numbers nil)
+#+END_SRC
+
+*** GitHub Markdown Export
+
+[[https://github.com/larstvei/ox-gfm][ox-gfm on GitHub]]
+[[https://melpa.org/#/ox-gfm][ox-gfm on MELPA]]
+
+#+BEGIN_SRC emacs-lisp
+  (use-package ox-gfm
+    :ensure t)
+
+  (eval-after-load "org"
+    '(require 'ox-gfm nil t))
+#+END_SRC
+
 
 ** Org Autocomplete
 #+BEGIN_SRC emacs-lisp
   (use-package org-ac
+    :disabled
     :ensure t
     ;; why is this require in init necessary? is it?
     :init (progn
@@ -458,19 +484,6 @@ Start a sml REPL with =M-x run-sml=. You should now be able to place your cursor
           ("t" "Todo Item" entry (file+headline    (concat org-directory "/todo.org") "Todo Items")
                "* TODO %?\n%T" :prepend t)))
 
-#+END_SRC
-
-** GitHub Markdown Export
-
-[[https://github.com/larstvei/ox-gfm][ox-gfm on GitHub]]
-[[https://melpa.org/#/ox-gfm][ox-gfm on MELPA]]
-
-#+BEGIN_SRC emacs-lisp
-  (use-package ox-gfm
-    :ensure t)
-
-  (eval-after-load "org"
-    '(require 'ox-gfm nil t))
 #+END_SRC
 
 ** Org-Trello
