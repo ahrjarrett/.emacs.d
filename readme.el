@@ -48,7 +48,10 @@
   :defer t
   :init (load-theme 'spacemacs-light))
 
+;; highlight line at point
 (global-hl-line-mode)
+;; highlight opposite paren
+(show-paren-mode t)
 
 (setenv "PATH" (concat "/usr/local/smlnj/bin:" (getenv "PATH")))
 (setq exec-path (cons "/usr/local/smlnj/bin"  exec-path))
@@ -347,6 +350,7 @@
   :bind (("C-c g" . magit-status)))
 
 (use-package git-gutter
+  :disabled
   :ensure t
   :init
   (global-git-gutter-mode +1))
