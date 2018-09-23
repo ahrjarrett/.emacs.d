@@ -272,12 +272,13 @@ Use tabs, set tab width to 2, delete whitespace on save:
 *** OCaml
 [[https://github.com/ocaml/tuareg][Tuareg Mode on GitHub]]
 
-TODO: Add regex for types of file extensions in =:mode=, e.g. =:mode ("\\.ml[ily]?$" . tuareg-mode)=
-
 #+BEGIN_SRC emacs-lisp
   (use-package tuareg
+    :mode ("\\.ml[ily]?$" . tuareg-mode)
     :ensure t)
 #+End_SRC
+
+**** DONE Add regex for types of file extensions in =:mode=
 
 ** Elm
 #+BEGIN_SRC emacs-lisp
@@ -389,6 +390,7 @@ DONE Once you get web-mode working, uncomment the line that adds a hook for pret
 #+END_SRC
 
 
+
 * Org-Mode
 ** Basic Org Config
 
@@ -444,12 +446,18 @@ Start a sml REPL with =M-x run-sml=. You should now be able to place your cursor
   =$ opam install ocp-indent=
   
   And that you have the correct load-path. After it installs, opam will tell you where it is.
+  
+Note that =shell-command-switch= is commented out. That's because [[https://dev.realworldocaml.org/install.html%0A][according to the OCaml setup instructions]], this value needs to be changed when using utop (or maybe any shell in general?). Anyway, for now it works.
 
 #+BEGIN_SRC emacs-lisp
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((sml . t)
      (ocaml . t)))
+
+  ;; According to this
+  ;;(setq shell-command-switch "-lc")
+
 
   ;; after installing ocp-indent:
   ;;(add-to-list 'load-path "/Users/aj/.opam/default/share/emacs/site-lisp"
@@ -462,10 +470,11 @@ Start a sml REPL with =M-x run-sml=. You should now be able to place your cursor
 
 #+BEGIN_SRC emacs-lisp
   ;; removes annoying numbering from headers when exporting to HTML.
-  ;; the equivalent of putting:
-  ;;     #+OPTIONS: num:nil 
-  ;; at the top of every org file:
+  ;; (the equivalent of putting #OPTIONS: num:nil  at the top of an org file)
   (setq org-export-with-section-numbers nil)
+
+  ;; don't confirm evaluating source blocks on export:
+  (setq org-confirm-babel-evaluate nil)
 #+END_SRC
 
 **** GitHub Markdown Export
@@ -540,18 +549,20 @@ Disabled <2018-09-22 Sat> because of minor annoyances while writing reports or p
      (evil-mode 1))
 #+END_SRC
 
-*** TODO Fix =C-u= keybinding as it conflicts with native Emacs binding for modifier
+*** Evil Config
 
 This occur-mode hook allows me to hit =C-z= in a Magit buffer to turn on/off Evil bindings:
 #+BEGIN_SRC emacs-lisp
   (add-hook 'occur-mode-hook
-            (lambda ()
-              (evil-add-hjkl-bindings occur-mode-map 'emacs
-                (kbd "/")       'evil-search-forward
-                (kbd "n")       'evil-search-next
-                (kbd "N")       'evil-search-previous
-                (kbd "C-d")     'evil-scroll-down
-                (kbd "C-u")     'evil-scroll-up)))
+      (lambda ()
+        (evil-add-hjkl-bindings occur-mode-map 'emacs
+          (kbd "/")       'evil-search-forward
+          (kbd "n")       'evil-search-next
+          (kbd "N")       'evil-search-previous
+          (kbd "C-d")     'evil-scroll-down)))
+          ;; This line conflicts with Emacs' built in modifier key
+          ;;(kbd "C-u")     'evil-scroll-up
+          
 #+END_SRC
 
 *** Evil-Surround
@@ -562,6 +573,15 @@ This occur-mode hook allows me to hit =C-z= in a Magit buffer to turn on/off Evi
     (global-evil-surround-mode 1))
 
 #+END_SRC
+
+*** Org-Evil
+
+#+BEGIN_SRC emacs-lisp
+  (use-package org-evil
+    :disabled
+    :ensure t)
+#+END_SRC
+
 
 ** Which-Key
 #+BEGIN_SRC emacs-lisp
@@ -677,25 +697,26 @@ Disabled: <2018-09-22 Sat>
 
 * Todo
 ** TODO Install & Configure CIDER (file under LISPs -> Clojure)
-** TODO Paredit [disabled]
+** DONE Paredit [disabled]
 Currently disabled as I'm trying [[https://github.com/shaunlebron/parinfer][parinfer]]
 
 #+BEGIN_SRC emacs-lisp
-  ;;(use-package paredit
-  ;;  :ensure t
-  ;;  :init
-  ;;    (autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
-  ;;    (add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
-  ;;    (add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
-  ;;    (add-hook 'ielm-mode-hook             #'enable-paredit-mode)
-  ;;    (add-hook 'lisp-mode-hook             #'enable-paredit-mode)
-  ;;    (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
-  ;;    (add-hook 'scheme-mode-hook           #'enable-paredit-mode)
+  (use-package paredit
+    :disabled
+    :ensure t
+    :init
+      (autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
+      (add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
+      (add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
+      (add-hook 'ielm-mode-hook             #'enable-paredit-mode)
+      (add-hook 'lisp-mode-hook             #'enable-paredit-mode)
+      (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
+      (add-hook 'scheme-mode-hook           #'enable-paredit-mode)
 
-  ;;    ;; turn on paredit for clojure:
-  ;;    (add-hook 'clojure-mode-hook #'paredit-mode))
+      ;; turn on paredit for clojure:
+      (add-hook 'clojure-mode-hook #'paredit-mode))
 #+END_SRC
-** TODO indium [disabled]
+** DONE indium [disabled]
 #+BEGIN_QUOTE
 Indium is a JavaScript development environment for Emacs.
 #+END_QUOTE
@@ -706,9 +727,9 @@ Indium suppoNodejs >= 8.x is required for Indium to work.
 Indium is availabe on MELPA, MELPA Stable.
 
 #+BEGIN_SRC emacs-lisp
-  ;;(use-package indium
-  ;;  :ensure t)
-
+  (use-package indium
+    :disabled
+    :ensure t)
 #+END_SRC
 
 Useful functions:

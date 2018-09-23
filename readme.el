@@ -151,6 +151,7 @@
   :mode ("\\.rei?'" . reason-mode))
 
 (use-package tuareg
+  :mode ("\\.ml[ily]?$" . tuareg-mode)
   :ensure t)
 
 (use-package elm-mode
@@ -245,15 +246,20 @@
  '((sml . t)
    (ocaml . t)))
 
+;; According to this
+;;(setq shell-command-switch "-lc")
+
+
 ;; after installing ocp-indent:
 ;;(add-to-list 'load-path "/Users/aj/.opam/default/share/emacs/site-lisp"
 ;;             (require 'ocp-indent))
 
 ;; removes annoying numbering from headers when exporting to HTML.
-;; the equivalent of putting:
-;;     #+OPTIONS: num:nil 
-;; at the top of every org file:
+;; (the equivalent of putting #OPTIONS: num:nil  at the top of an org file)
 (setq org-export-with-section-numbers nil)
+
+;; don't confirm evaluating source blocks on export:
+(setq org-confirm-babel-evaluate nil)
 
 (use-package ox-gfm
   :ensure t)
@@ -298,18 +304,23 @@
    (evil-mode 1))
 
 (add-hook 'occur-mode-hook
-          (lambda ()
-            (evil-add-hjkl-bindings occur-mode-map 'emacs
-              (kbd "/")       'evil-search-forward
-              (kbd "n")       'evil-search-next
-              (kbd "N")       'evil-search-previous
-              (kbd "C-d")     'evil-scroll-down
-              (kbd "C-u")     'evil-scroll-up)))
+    (lambda ()
+      (evil-add-hjkl-bindings occur-mode-map 'emacs
+        (kbd "/")       'evil-search-forward
+        (kbd "n")       'evil-search-next
+        (kbd "N")       'evil-search-previous
+        (kbd "C-d")     'evil-scroll-down)))
+        ;; This line conflicts with Emacs' built in modifier key
+        ;;(kbd "C-u")     'evil-scroll-up
 
 (use-package evil-surround
   :ensure t
   :config
   (global-evil-surround-mode 1))
+
+(use-package org-evil
+  :disabled
+  :ensure t)
 
 (use-package which-key
   :ensure t
