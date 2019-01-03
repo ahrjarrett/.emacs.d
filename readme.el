@@ -65,7 +65,7 @@
 (defun load-directory (dir)
   (let ((load-it (lambda (f)
                   (load-file (concat (file-name-as-directory dir) f)))))
-   
+
       (mapc load-it (directory-files dir nil "\\.el$"))))
 
  ;;add =vendor= to default directory
@@ -239,6 +239,8 @@
 ;;(setq org-agenda-files (list (concat org-directory "/google-calendar.org")
 ;;                             (concat org-directory "/index.org"))))
 
+
+
 (require 'ob-sml nil 'noerror)
 
 (org-babel-do-load-languages
@@ -275,7 +277,7 @@
          (require 'org-ac)
          (org-ac/config-default)))
 
-;; Go into Insert state after org-capture 
+;; Go into Insert state after org-capture
 (add-hook 'org-capture-mode-hook 'evil-insert-state)
 
 ;; NOTE: %i allows you to mark a block of text anywhere in Emacs,
@@ -327,6 +329,10 @@
   :config
   (which-key-mode))
 
+(use-package helm
+  :disabled
+  :ensure t)
+
 (use-package ivy
   :ensure t
   :init
@@ -345,7 +351,7 @@
 (use-package try
   :ensure t)
 
-(use-package company               
+(use-package company
   :ensure t
   :defer t
   :init (global-company-mode)
@@ -395,19 +401,21 @@
   (setq sunshine-location "Denver, CO, USA")
   (setq sunshine-show-icons t))
 
-;;(use-package paredit
-;;  :ensure t
-;;  :init
-;;    (autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
-;;    (add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
-;;    (add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
-;;    (add-hook 'ielm-mode-hook             #'enable-paredit-mode)
-;;    (add-hook 'lisp-mode-hook             #'enable-paredit-mode)
-;;    (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
-;;    (add-hook 'scheme-mode-hook           #'enable-paredit-mode)
+(use-package paredit
+  :disabled
+  :ensure t
+  :init
+    (autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
+    (add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
+    (add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
+    (add-hook 'ielm-mode-hook             #'enable-paredit-mode)
+    (add-hook 'lisp-mode-hook             #'enable-paredit-mode)
+    (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
+    (add-hook 'scheme-mode-hook           #'enable-paredit-mode)
 
-;;    ;; turn on paredit for clojure:
-;;    (add-hook 'clojure-mode-hook #'paredit-mode))
+    ;; turn on paredit for clojure:
+    (add-hook 'clojure-mode-hook #'paredit-mode))
 
-;;(use-package indium
-;;  :ensure t)
+(use-package indium
+  :disabled
+  :ensure t)

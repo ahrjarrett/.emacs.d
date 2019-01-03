@@ -132,7 +132,7 @@ Consider moving this into [[file:init.el][init.el]]?
   (defun load-directory (dir)
     (let ((load-it (lambda (f)
                     (load-file (concat (file-name-as-directory dir) f)))))
-     
+
         (mapc load-it (directory-files dir nil "\\.el$"))))
 
    ;;add =vendor= to default directory
@@ -426,6 +426,12 @@ The latest version of org-mode is manually installed in this directory under [[f
 
 ** Org-Babel
 
+*** Shell
+
+#+BEGIN_SRC emacs-lisp
+
+#+END_SRC
+
 *** SML
 
 [[https://github.com/swannodette/ob-sml][ob-sml on GitHub]]
@@ -444,9 +450,9 @@ Start a sml REPL with =M-x run-sml=. You should now be able to place your cursor
 - =ocp-indent= tells org-mode how to export OCaml results to other formats, for example html. For this to work, make sure you've installed it with:
 
   =$ opam install ocp-indent=
-  
+
   And that you have the correct load-path. After it installs, opam will tell you where it is.
-  
+
 Note that =shell-command-switch= is commented out. That's because [[https://dev.realworldocaml.org/install.html%0A][according to the OCaml setup instructions]], this value needs to be changed when using utop (or maybe any shell in general?). Anyway, for now it works.
 
 #+BEGIN_SRC emacs-lisp
@@ -507,7 +513,7 @@ Disabled <2018-09-22 Sat> because of minor annoyances while writing reports or p
 
 ** Org Capture
 #+BEGIN_SRC emacs-lisp
-  ;; Go into Insert state after org-capture 
+  ;; Go into Insert state after org-capture
   (add-hook 'org-capture-mode-hook 'evil-insert-state)
 
   ;; NOTE: %i allows you to mark a block of text anywhere in Emacs,
@@ -562,7 +568,7 @@ This occur-mode hook allows me to hit =C-z= in a Magit buffer to turn on/off Evi
           (kbd "C-d")     'evil-scroll-down)))
           ;; This line conflicts with Emacs' built in modifier key
           ;;(kbd "C-u")     'evil-scroll-up
-          
+
 #+END_SRC
 
 *** Evil-Surround
@@ -591,8 +597,24 @@ This occur-mode hook allows me to hit =C-z= in a Magit buffer to turn on/off Evi
     (which-key-mode))
 #+END_SRC
 
-** Ivy
+** TODO Helm
+[[https://github.com/emacs-helm/helm][Helm on GitHub]]
+
+Todo: Configure Helm & start doing cool stuff.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package helm
+    :disabled
+    :ensure t)
+#+END_SRC
+
+
+** TODO Ivy (disabled)
+Currently disabled so I can try out helm for a bit.
+<2018-09-23 Sun>
+
 [[https://github.com/abo-abo/swiper][Repository for Ivy, Swiper & Counsel]]
+
 #+BEGIN_SRC emacs-lisp
   (use-package ivy
     :ensure t
@@ -619,7 +641,7 @@ This occur-mode hook allows me to hit =C-z= in a Magit buffer to turn on/off Evi
 ** Completion
 *** Company-Mode
 #+BEGIN_SRC emacs-lisp
-  (use-package company               
+  (use-package company
     :ensure t
     :defer t
     :init (global-company-mode)
@@ -736,25 +758,25 @@ Useful functions:
 
 1. _Start a process_: =M-x indium-run-node=
    Brings this up in the mini-buffer =Node command: node <point>=
-   
+
    This is what the REPL brings up when you run vanilla node:
-   
-   #+BEGIN_SRC 
+
+   #+BEGIN_SRC
    Getting started:
-   
+
    - Press <<return>> on links to open an inspector
    - Press <M-p> and <M-n> to navigate in the history
    - Use <M-x indium-scratch> to open a scratch buffer for JS evaluation
    - Press <C-h m> to see a list of available keybindings
    - Press <C-c C-o> to clear the output
-   
+
    To disconnect from the JavaScript process, press <C-c C-q>.
    Doing this will also close all inspectors and debugger buffers
    connected to the process.
    #+END_SRC
-   
+
    Necessary REPL command cheat sheet:
-   
+
    | Command    | Behavior                            |
    |------------+-------------------------------------|
    | <<return>> | (On links) Open an inspector        |
