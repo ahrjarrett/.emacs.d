@@ -38,6 +38,17 @@ Example use case, where =ssh.config= contains the phrase "Hello World":
 ;; ("Hello" "World")
 #+END_SRC
 
+** =insert-file-name=
+
+Insert the full path file name into the current buffer. Useful for when using the current file name to create an easy template (see Easy Templates section).
+
+Not being used in easy templates as of <2019-03-22 Fri>.
+
+#+BEGIN_SRC emacs-lisp
+(defun insert-file-name ()
+  (insert (buffer-file-name (window-buffer (minibuffer-selected-window)))))
+#+END_SRC
+
 
 * Init
 
@@ -513,7 +524,6 @@ Use =<P + TAB= to create a header like this:
 #+AUTHOR: Andrew Jarrett
 #+EMAIL: ahrjarrett@gmail.com
 #+DATE: <2019-03-22 Fri>
-
 #+END_SRC
 
 Note that [[https://emacs.stackexchange.com/questions/44044/concat-in-org-easy-templates][this Stack Overflow question]] explains how we're able to use concat using the backtick and a comma in the list we pass to ~org-structure-template-alist~.
