@@ -424,6 +424,7 @@ The latest version of org-mode is manually installed in this directory under [[f
   ;;                             (concat org-directory "/index.org"))))
 #+END_SRC
 
+
 ** Org-Babel
 
 *** Shell
@@ -470,6 +471,7 @@ Note that =shell-command-switch= is commented out. That's because [[https://dev.
   ;;             (require 'ocp-indent))
 #+END_SRC
 
+
 *** Exporting
 
 **** Defaults
@@ -496,6 +498,31 @@ Note that =shell-command-switch= is commented out. That's because [[https://dev.
     '(require 'ox-gfm nil t))
 #+END_SRC
 
+
+
+** Easy Templates
+
+[[https://orgmode.org/manual/Easy-templates.html][Docs for Easy Templates]]
+
+*** Org Mode Default Headers
+
+Use =<P + TAB= to create a header like this:
+
+#+BEGIN_SRC 
+#+TITLE: 
+#+AUTHOR: Andrew Jarrett
+#+EMAIL: ahrjarrett@gmail.com
+#+DATE: <2019-03-22 Fri>
+
+#+END_SRC
+
+Note that [[https://emacs.stackexchange.com/questions/44044/concat-in-org-easy-templates][this Stack Overflow question]] explains how we're able to use concat using the backtick and a comma in the list we pass to ~org-structure-template-alist~.
+
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'org-structure-template-alist
+               `("P" ,(concat "#+TITLE: ?" "\n" "#+AUTHOR: " user-full-name "\n" "#+EMAIL:" user-email-address "\n" "#+DATE: " (format-time-string "%m/%d/%Y") "\n\n")))
+
+#+END_SRC
 
 
 ** Org Autocomplete

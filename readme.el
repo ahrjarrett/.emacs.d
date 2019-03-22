@@ -256,6 +256,9 @@
 ;;(add-to-list 'load-path "/Users/aj/.opam/default/share/emacs/site-lisp"
 ;;             (require 'ocp-indent))
 
+(add-to-list 'org-structure-template-alist
+             '("P" "#+TITLE:\n#+: html-postamble:nil whn:nil toc:nil nav:nil\n#+HTML_HEAD:\n#+HTML_HEAD_EXTRA:\n\n? "))
+
 ;; removes annoying numbering from headers when exporting to HTML.
 ;; (the equivalent of putting #OPTIONS: num:nil  at the top of an org file)
 (setq org-export-with-section-numbers nil)
