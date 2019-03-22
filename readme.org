@@ -530,7 +530,7 @@ Note that [[https://emacs.stackexchange.com/questions/44044/concat-in-org-easy-t
 
 #+BEGIN_SRC emacs-lisp
   (add-to-list 'org-structure-template-alist
-               `("P" ,(concat "#+TITLE: ?" "\n" "#+AUTHOR: " user-full-name "\n" "#+EMAIL:" user-email-address "\n" "#+DATE: " (format-time-string "%m/%d/%Y") "\n\n")))
+               `("P" ,(concat "#+TITLE: ?" "\n" "#+AUTHOR: " user-full-name "\n" "#+EMAIL:" user-email-address "\n" "#+DATE: " (format-time-string "%m/%d/%Y"))))
 
 #+END_SRC
 
