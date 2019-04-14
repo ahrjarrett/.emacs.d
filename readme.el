@@ -1,4 +1,3 @@
-
 (defun load-packages (package-list)
   (dolist (package package-list)
     (unless (package-installed-p package)
@@ -9,6 +8,9 @@
   (with-temp-buffer
     (insert-file-contents file-path)
     (buffer-string)))
+
+(defun insert-file-name ()
+  (insert (buffer-file-name (window-buffer (minibuffer-selected-window)))))
 
 ;; Set frame size on startup:
 (add-to-list 'default-frame-alist '(height . 56))
@@ -241,7 +243,7 @@
 
 
 
-(require 'ob-sml nil 'noerror)
+;(require 'ob-sml nil 'noerror)
 
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -256,9 +258,6 @@
 ;;(add-to-list 'load-path "/Users/aj/.opam/default/share/emacs/site-lisp"
 ;;             (require 'ocp-indent))
 
-(add-to-list 'org-structure-template-alist
-             '("P" "#+TITLE:\n#+: html-postamble:nil whn:nil toc:nil nav:nil\n#+HTML_HEAD:\n#+HTML_HEAD_EXTRA:\n\n? "))
-
 ;; removes annoying numbering from headers when exporting to HTML.
 ;; (the equivalent of putting #OPTIONS: num:nil  at the top of an org file)
 (setq org-export-with-section-numbers nil)
@@ -271,6 +270,9 @@
 
 (eval-after-load "org"
   '(require 'ox-gfm nil t))
+
+(add-to-list 'org-structure-template-alist
+             `("P" ,(concat "#+TITLE: ?" "\n" "#+AUTHOR: " user-full-name "\n" "#+EMAIL:" user-email-address "\n" "#+DATE: " (format-time-string "%m/%d/%Y"))))
 
 (use-package org-ac
   :disabled

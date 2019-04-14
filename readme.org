@@ -1,3 +1,4 @@
+
 #+TITLE: My Emacs Config
 #+AUTHOR: Andrew Jarrett
 #+EMAIL: ahrjarrett@gmail.com
@@ -453,7 +454,7 @@ Start a sml REPL with =M-x run-sml=. You should now be able to place your cursor
 #+END_QUOTE
 
 #+BEGIN_SRC emacs-lisp
-  (require 'ob-sml nil 'noerror)
+  ;(require 'ob-sml nil 'noerror)
 #+END_SRC
 
 *** Kick it all off
@@ -470,8 +471,10 @@ Note that =shell-command-switch= is commented out. That's because [[https://dev.
 #+BEGIN_SRC emacs-lisp
   (org-babel-do-load-languages
    'org-babel-load-languages
-   '((sml . t)
-     (ocaml . t)))
+   '(
+     ;;(sml . t)
+     ;;(ocaml . t)
+    ))
 
   ;; According to this
   ;;(setq shell-command-switch "-lc")
@@ -519,8 +522,8 @@ Note that =shell-command-switch= is commented out. That's because [[https://dev.
 
 Use =<P + TAB= to create a header like this:
 
-#+BEGIN_SRC 
-#+TITLE: 
+#+BEGIN_SRC
+#+TITLE:
 #+AUTHOR: Andrew Jarrett
 #+EMAIL: ahrjarrett@gmail.com
 #+DATE: <2019-03-22 Fri>
@@ -780,7 +783,7 @@ Currently disabled as I'm trying [[https://github.com/shaunlebron/parinfer][pari
 Indium is a JavaScript development environment for Emacs.
 #+END_QUOTE
 
-[[https://indium.readthedocs.io/en/latest/][Docs]] [[https://github.com/NicolasPetton/Indium][GitHub]]
+[[https://indium.thedocs.io/en/latest/][Docs]] [[https://github.com/NicolasPetton/Indium][GitHub]]
 
 Indium suppoNodejs >= 8.x is required for Indium to work.
 Indium is availabe on MELPA, MELPA Stable.
