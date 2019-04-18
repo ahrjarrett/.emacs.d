@@ -34,7 +34,8 @@
 
 (use-package nord-theme
   :ensure t
-  :defer t)
+  :defer t
+  :init (load-theme 'nord-theme))
 
 (use-package zenburn-theme
   :ensure t
@@ -43,7 +44,7 @@
 (use-package leuven-theme
   :ensure t
   :defer t
-  :init (load-theme 'leuven))
+  init (load-theme 'leuven))
 
 (use-package sublime-themes
   :ensure t
@@ -51,9 +52,7 @@
 
 (use-package spacemacs-theme
   :ensure t
-  :defer t
-  :init ;;(load-theme 'spacemacs-light)
- )
+  :defer t)
 
 ;; highlight line at point
 (global-hl-line-mode)
@@ -247,8 +246,10 @@
 
 (org-babel-do-load-languages
  'org-babel-load-languages
- '((sml . t)
-   (ocaml . t)))
+ '(
+   ;;(sml . t)
+   ;;(ocaml . t)
+  ))
 
 ;; According to this
 ;;(setq shell-command-switch "-lc")

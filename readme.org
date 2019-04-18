@@ -100,7 +100,8 @@ This package allows me to adjust font-size in all buffers, including the mini-bu
 #+BEGIN_SRC emacs-lisp
   (use-package nord-theme
     :ensure t
-    :defer t)
+    :defer t
+    :init (load-theme 'nord-theme))
 
   (use-package zenburn-theme
     :ensure t
@@ -109,7 +110,7 @@ This package allows me to adjust font-size in all buffers, including the mini-bu
   (use-package leuven-theme
     :ensure t
     :defer t
-    :init (load-theme 'leuven))
+  )
 
   (use-package sublime-themes
     :ensure t
@@ -118,8 +119,7 @@ This package allows me to adjust font-size in all buffers, including the mini-bu
   (use-package spacemacs-theme
     :ensure t
     :defer t
-    :init ;;(load-theme 'spacemacs-light)
-   )
+    :init (load-theme 'spacemacs-dark t))
 
 #+END_SRC
 
