@@ -78,8 +78,8 @@ Garbage collect at 20MG instead of 0.76MB to speed up some operations:
 **** Default typeface
 
 #+BEGIN_SRC emacs-lisp
-  (add-to-list 'default-frame-alist '(font . "Fira Code Medium" ))
-  (set-face-attribute 'default t :font "Fira Code Medium" )
+  (add-to-list 'default-frame-alist '(font . "mononoki Nerd Font" ))
+  (set-face-attribute 'default t :font "mononoki Nerd Font" )
 #+END_SRC
 
 **** Font Scaling
@@ -99,6 +99,7 @@ This package allows me to adjust font-size in all buffers, including the mini-bu
 
 #+BEGIN_SRC emacs-lisp
   (use-package nord-theme
+    :disabled
     :ensure t
     :defer t
     :init (load-theme 'nord-theme))
@@ -361,14 +362,15 @@ TODO really dig into react, make sure you can use arrow fn in component attribut
 DONE Once you get web-mode working, uncomment the line that adds a hook for prettier.
 
 #+BEGIN_SRC emacs-lisp
-;;(use-package prettier-js
-;;  :ensure t
-;;  :init
-;;  (add-hook 'js2-mode-hook 'prettier-js-mode)
-;;  (add-hook 'web-mode-hook 'prettier-js-mode)
-;;  (setq prettier-js-args
-;;        '("--trailing-comma" "all"
-;;          "--single-quote" "true")))
+(use-package prettier-js
+  :disabled
+  :ensure t
+  :init
+  (add-hook 'js2-mode-hook 'prettier-js-mode)
+  (add-hook 'web-mode-hook 'prettier-js-mode)
+  (setq prettier-js-args
+        '("--trailing-comma" "all"
+          "--single-quote" "true")))
 #+END_SRC
 
 ** Markdown
@@ -577,10 +579,10 @@ Disabled <2018-09-22 Sat> because of minor annoyances while writing reports or p
 *Note:* Apparently =org-trello= doesn't always play nice with =use-package=, so for now I'm installing manually. Will have to reinstall using =M-x package-install= on fresh installs of Emacs.
 
 #+BEGIN_SRC emacs-lisp
-  (load-packages '(org-trello))
-  (require 'org-trello)
-  (setq org-trello-files
-    (directory-files "~/Dropbox/org/ownlocal/trello" ".*\.org$"))
+  ;;(load-packages '(org-trello))
+  ;;(require 'org-trello)
+  ;;(setq org-trello-files
+  ;;  (directory-files "~/Dropbox/org/ownlocal/trello" ".*\.org$"))
 #+END_SRC
 
 
@@ -748,6 +750,7 @@ Disabled: <2018-09-22 Sat>
 [[https://github.com/aaronbieber/sunshine.el][Sunshine.el on Github]]
 #+BEGIN_SRC emacs-lisp
   (use-package sunshine
+    :disabled
     :ensure t
     :commands sunshine-forecast
     :config

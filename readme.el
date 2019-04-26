@@ -23,8 +23,8 @@
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 
-(add-to-list 'default-frame-alist '(font . "Fira Code Medium" ))
-(set-face-attribute 'default t :font "Fira Code Medium" )
+(add-to-list 'default-frame-alist '(font . "mononoki Nerd Font" ))
+(set-face-attribute 'default t :font "mononoki Nerd Font" )
 
 ;; font scaling
 (use-package default-text-scale
@@ -33,6 +33,7 @@
   ("C-M--" . default-text-scale-decrease))
 
 (use-package nord-theme
+  :disabled
   :ensure t
   :defer t
   :init (load-theme 'nord-theme))
@@ -44,7 +45,7 @@
 (use-package leuven-theme
   :ensure t
   :defer t
-  init (load-theme 'leuven))
+)
 
 (use-package sublime-themes
   :ensure t
@@ -52,7 +53,8 @@
 
 (use-package spacemacs-theme
   :ensure t
-  :defer t)
+  :defer t
+  :init (load-theme 'spacemacs-dark t))
 
 ;; highlight line at point
 (global-hl-line-mode)
@@ -192,14 +194,15 @@
   ;(use-package skewer-less)
   )
 
-;;(use-package prettier-js
-;;  :ensure t
-;;  :init
-;;  (add-hook 'js2-mode-hook 'prettier-js-mode)
-;;  (add-hook 'web-mode-hook 'prettier-js-mode)
-;;  (setq prettier-js-args
-;;        '("--trailing-comma" "all"
-;;          "--single-quote" "true")))
+(use-package prettier-js
+  :disabled
+  :ensure t
+  :init
+  (add-hook 'js2-mode-hook 'prettier-js-mode)
+  (add-hook 'web-mode-hook 'prettier-js-mode)
+  (setq prettier-js-args
+        '("--trailing-comma" "all"
+          "--single-quote" "true")))
 
 (use-package markdown-mode
   :ensure t
@@ -300,10 +303,10 @@
         ("t" "Todo Item" entry (file+headline    (concat org-directory "/todo.org") "Todo Items")
              "* TODO %?\n%T" :prepend t)))
 
-(load-packages '(org-trello))
-(require 'org-trello)
-(setq org-trello-files
-  (directory-files "~/Dropbox/org/ownlocal/trello" ".*\.org$"))
+;;(load-packages '(org-trello))
+;;(require 'org-trello)
+;;(setq org-trello-files
+;;  (directory-files "~/Dropbox/org/ownlocal/trello" ".*\.org$"))
 
 (use-package evil
    :ensure t
@@ -399,6 +402,7 @@
   (global-git-gutter-mode +1))
 
 (use-package sunshine
+  :disabled
   :ensure t
   :commands sunshine-forecast
   :config
